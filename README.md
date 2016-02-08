@@ -1,2 +1,3 @@
-# dats2410-oblig01
-Dats2410 (Nettverk og skytjenester) - Oblig 01
+# Oblig 01 - DATS2410 (Nettverk og skytjenester)
+
+
