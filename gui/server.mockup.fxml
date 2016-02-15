@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleButton?>
@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -83,17 +83,10 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ToggleButton mnemonicParsing="false" text="Auto" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                              <Slider maxWidth="125.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Slider>
-                              <Slider maxWidth="125.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                              <Slider maxWidth="125.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                              <Label text="Red" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <Label text="Yellow" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                              <Label text="Green" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                              <ToggleButton mnemonicParsing="false" text="Auto" GridPane.columnIndex="1" />
+                              <CheckBox contentDisplay="RIGHT" mnemonicParsing="false" text="Red" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <CheckBox contentDisplay="RIGHT" mnemonicParsing="false" text="Yellow" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <CheckBox contentDisplay="RIGHT" mnemonicParsing="false" text="Green" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                         </GridPane>
                      </center>

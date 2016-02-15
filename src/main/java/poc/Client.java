@@ -1,4 +1,4 @@
-package net.plastboks.dats2410.oblig1;
+package main.java.poc;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class Client
                 if (!receivedText.equals(SERVER_BEAT)) {
                     System.out.printf("Server: %s\n", receivedText);
                 }
-
+                System.out.println("ping");
                 out.println(HARTBEAT);
             }
 

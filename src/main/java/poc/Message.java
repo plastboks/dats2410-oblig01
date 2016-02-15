@@ -1,4 +1,4 @@
-package net.plastboks.dats2410.oblig1;
+package main.java.poc;
 
 /**
  * Created by alex on 2/5/16.

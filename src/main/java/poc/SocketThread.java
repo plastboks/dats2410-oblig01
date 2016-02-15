@@ -1,4 +1,4 @@
-package net.plastboks.dats2410.oblig1;
+package main.java.poc;
 
 import java.net.*;
 import java.io.*;
@@ -40,6 +40,7 @@ public class SocketThread extends Thread
                 } else {
                     out.println(HARTBEAT);
                 }
+                System.out.println("pong");
 
             } while (in.readLine() != null);
 

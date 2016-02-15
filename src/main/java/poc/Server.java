@@ -1,4 +1,4 @@
-package net.plastboks.dats2410.oblig1;
+package main.java.poc;
 
 import java.io.IOException;
 import java.net.ServerSocket;
