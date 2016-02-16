@@ -4,7 +4,7 @@
 - [x] Skrive en tekstlig kommunikasjonsprotokoll med linjeskift som endetegn (som og inkluderer hartbeat sendingene)
 - [ ] Skrive server+client GUI (fxml) og tilhørende java klasser.
 - [ ] Lage et diagram (UML?) for oppbygging av software lagene (kommunikasjon(Sockets), backend, frontend).
-- [ ] Skriver dialogbokser for port og ipaddresse for client og server (fxml + java).
+- [ ] Skriver dialogbokser for port og ipaddresse for client og server (fxml + java). (HC)
 - [ ] Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
 - [ ] Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")
 - [ ] Skrive en protollgenerator (serversiden) som skaper datastrengene til klientene.
