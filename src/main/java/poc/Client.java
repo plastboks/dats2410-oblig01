@@ -12,8 +12,8 @@ import java.net.UnknownHostException;
  */
 public class Client
 {
-    private static String host = "127.0.0.1";
-    private static int port = 5555;
+    private static String host = "10.253.9.95";
+    private static int port = 1234;
 
     private static final int THREAD_SLEEP = 100;
     private static final String HARTBEAT = "tock";
