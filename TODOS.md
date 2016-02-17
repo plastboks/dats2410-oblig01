@@ -6,7 +6,7 @@
 - [ ] Lage et diagram (UML?) for oppbygging av software lagene (kommunikasjon(Sockets), backend, frontend).
 - [ ] Skriver dialogbokser for port og ipaddresse for client og server (fxml + java). (HC)
 - [ ] Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
-- [ ] Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")
+- [ ] Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")(S)
 - [ ] Skrive en protollgenerator (serversiden) som skaper datastrengene til klientene.
 - [ ] Lage en statisk klasse (singleton) som nåværende datasignal for sockettrådene.
 - [ ] Sikre at sockettrådene til serverkoden (poc) fungerer tilstrekkelig.
