@@ -84,12 +84,12 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ToggleButton mnemonicParsing="false" text="Auto" GridPane.halignment="CENTER" />
-                              <CheckBox contentDisplay="RIGHT" mnemonicParsing="false" text="Red" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <CheckBox contentDisplay="RIGHT" mnemonicParsing="false" text="Yellow" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <CheckBox contentDisplay="RIGHT" mnemonicParsing="false" text="Green" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <Button mnemonicParsing="false" text="Send" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <ToggleButton mnemonicParsing="false" text="Pulse" GridPane.columnIndex="1" />
+                              <ToggleButton fx:id="autoButton" mnemonicParsing="false" text="Auto" GridPane.halignment="CENTER" />
+                              <CheckBox fx:id="redBox" contentDisplay="RIGHT" mnemonicParsing="false" text="Red" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <CheckBox fx:id="yellowBox" contentDisplay="RIGHT" mnemonicParsing="false" text="Yellow" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <CheckBox fx:id="greenBox" contentDisplay="RIGHT" mnemonicParsing="false" text="Green" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Button fx:id="sendButton" mnemonicParsing="false" text="Send" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <ToggleButton fx:id="pulseButton" mnemonicParsing="false" text="Pulse" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </center>
