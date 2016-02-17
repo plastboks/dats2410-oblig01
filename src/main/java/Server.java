@@ -21,12 +21,18 @@ public class Server extends Application
 
     @Override
     public void start(Stage server) throws IOException {
+
+
         Parent parent = FXMLLoader.load(getClass().getResource("gui/server.mockup.fxml"));
-
         Scene scene = new Scene(parent);
-
         server.setTitle("Server");
         server.setScene(scene);
         server.show();
+
+    }
+
+    public void send()
+    {
+        System.out.println("Kommando send klient");
     }
 }
