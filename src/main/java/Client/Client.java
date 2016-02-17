@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class Client
     private static final String HARTBEAT = "tock";
     private static final String SERVER_BEAT = "tick";
 
-    /* Få inn instans av (Client)APP.java */
+    /* Få inn instans av (client)APP.java */
 
     public static void main(String[] args) throws InterruptedException
     {
@@ -51,7 +51,7 @@ public class Client
                 Thread.sleep(THREAD_SLEEP);
 
                 if (!receivedText.equals(SERVER_BEAT)) {
-                    parser.signalparse(receivedText); //Send med Client APP.java instans
+                    parser.signalparse(receivedText); //Send med client APP.java instans
                 }
                 System.out.println("ping");
                 out.println(HARTBEAT);

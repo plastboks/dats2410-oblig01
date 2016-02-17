@@ -1,11 +1,11 @@
-package Client;
+package client;
 
 /**
  * Created by Simon on 17.02.2016.
  */
 public class Protocolparser {
 
-    /* Ta i mot Client APP.java insans */
+    /* Ta i mot client APP.java insans */
     public static void signalparse(String in)
     {
 
