@@ -10,17 +10,45 @@ public class ProtocolGenerator
     public static class Payload
     {
         private String load;
-        public String get() { return load; }
-        public void set(String load) { this.load = load; }
-    }
+        private ValidState red = ValidState.OFF, yellow = ValidState.OFF,
+                green = ValidState.OFF;
 
-    public static Payload generate(ValidState red, ValidState yellow, ValidState green)
-    {
-        Payload payLoad = new Payload();
-        payLoad.set(String.format("%d;%d;%d",
-                green == ValidState.OFF ? 0 : 1,
-                yellow == ValidState.OFF ? 0 : 1,
-                red == ValidState.OFF ? 0 : 1));
-        return payLoad;
+        private Payload()
+        {
+            generate(red, yellow, green);
+        }
+
+        private void generate(ValidState green, ValidState yellow, ValidState red)
+        {
+            load = String.format("%d;%d;%d",
+                    green == ValidState.OFF ? 0 : 1,
+                    yellow == ValidState.OFF ? 0 : 1,
+                    red == ValidState.OFF ? 0 : 1);
+        }
+
+        public static Payload with()
+        {
+            return new Payload();
+        }
+
+        public Payload red(ValidState red)
+        {
+            generate(this.green, this.yellow, red);
+            return this;
+        }
+
+        public Payload yellow(ValidState yello)
+        {
+            generate(this.green, yellow, this.red);
+            return this;
+        }
+
+        public Payload green(ValidState green)
+        {
+            generate(green, this.yellow, this.red);
+            return this;
+        }
+
+        public String get() { return load; }
     }
 }

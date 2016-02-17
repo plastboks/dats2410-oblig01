@@ -11,6 +11,12 @@ public enum MessageHandler
 
     private String message;
 
+    /**
+     * Usage: (assumes correct imports)
+     *    MessageHandler.inst.setMessage(Payload.with().red(ON).green(ON).yellow(OFF));
+     *
+     * @param payload
+     */
     public void setMessage(ProtocolGenerator.Payload payload)
     {
         this.message = payload.get();
