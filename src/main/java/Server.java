@@ -27,7 +27,6 @@ public class Server extends Application {
         server.show();
     }
 
-
 }
 
 
