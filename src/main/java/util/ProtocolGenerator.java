@@ -26,10 +26,7 @@ public class ProtocolGenerator
                     red == ValidState.OFF ? 0 : 1);
         }
 
-        public static Payload with()
-        {
-            return new Payload();
-        }
+        public static Payload with() { return new Payload(); }
 
         public Payload red(ValidState red)
         {
@@ -37,7 +34,7 @@ public class ProtocolGenerator
             return this;
         }
 
-        public Payload yellow(ValidState yello)
+        public Payload yellow(ValidState yellow)
         {
             generate(this.green, yellow, this.red);
             return this;
