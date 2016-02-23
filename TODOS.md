@@ -14,5 +14,5 @@
 - [ ] Skrive en logger for server og klientsiden (ingen lagring til fil, kun minne)
 - [ ] Sørge for at klienter som kobler til får siste gyldige datasignal.
 - [ ] Undersøke hvordan (om) javatråder kan fingres (for å reagere på events) (evt en liste med tråder)
-- [ ] Skrive dokumentasjon (hp)
+- [ ] Skrive dokumentasjon
 - [ ] Wireshark'e
