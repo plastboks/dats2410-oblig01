@@ -47,7 +47,8 @@
                           </rowConstraints>
                            <children>
                               <Circle fx:id="redCircle" fill="RED" radius="36.0" stroke="RED" strokeType="INSIDE" strokeWidth="5.0" />
-                              <Circle fx:id="yellowCircl" fill="YELLOW" radius="36.0" stroke="#f2f200" strokeType="INSIDE" strokeWidth="5.0" GridPane.rowIndex="1" />
+                              <Circle fx:id="yellowCircle" fill="YELLOW" radius="36.0" stroke="#f2f200"
+                                      strokeType="INSIDE" strokeWidth="5.0" GridPane.rowIndex="1" />
                               <Circle fx:id="greenCircle" fill="LIME" radius="36.0" stroke="#00ee00" strokeType="INSIDE" strokeWidth="5.0" GridPane.rowIndex="2" />
                            </children>
                            <BorderPane.margin>
@@ -71,7 +72,8 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ToggleButton fx:id="autoButton" mnemonicParsing="false" text="Auto" GridPane.halignment="CENTER" />
+                              <ToggleButton fx:id="autoButt" mnemonicParsing="false" text="Auto"
+                                            GridPane.halignment="CENTER" onAction="#toggleAutoBtn"/>
                               <CheckBox fx:id="redBox" contentDisplay="RIGHT" mnemonicParsing="false" text="Red" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <CheckBox fx:id="yellowBox" contentDisplay="RIGHT" mnemonicParsing="false" text="Yellow" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <CheckBox fx:id="greenBox" contentDisplay="RIGHT" mnemonicParsing="false" text="Green" GridPane.columnIndex="1" GridPane.rowIndex="5" />

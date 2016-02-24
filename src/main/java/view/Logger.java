@@ -1,5 +1,6 @@
 package main.java.view;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -25,6 +26,7 @@ public class Logger extends ListView<String>
     {
         String line = String.format("[%s] %s", sdf.format(new Date()), str);
         list.add(line);
-        getItems().setAll(list);
+
+        Platform.runLater(() -> getItems().setAll(list));
     }
 }

@@ -4,14 +4,19 @@
 
 package main.java.server;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.shape.Circle;
 import main.java.util.Constants;
+import main.java.util.ProtocolGenerator;
 import main.java.view.Logger;
 
 import java.io.IOException;
+
+import main.java.util.ProtocolGenerator.ValidState;
+import main.java.util.ProtocolGenerator.Payload;
 
 
 public class ServerController
@@ -31,15 +36,21 @@ public class ServerController
 
     public ServerController() throws IOException
     {
+        dispatcher = ServerDispatcher.getInstance();
+        auto = new AutoLogic(this, dispatcher);
+        auto.start();
     }
 
-    public ServerController(ServerDispatcher dispatcher) throws IOException
+    public void pushLoggerToDispatcher() throws IOException
     {
-        this();
-        this.dispatcher = dispatcher;
-        auto = new AutoLogic(dispatcher);
-        auto.run();
+        ServerDispatcher.getInstance().setLogger(logger);
     }
+
+    public void killAutoThread()
+    {
+        auto.kill();
+    }
+
 
     @FXML
     private void sendButtonAction(ActionEvent event)
@@ -53,11 +64,6 @@ public class ServerController
         autoToggle = !autoToggle;
         auto.setState(autoToggle);
         toggleCheckboxes();
-    }
-
-    public void pushLoggerToDispatcher() throws IOException
-    {
-        ServerDispatcher.getInstance().setLogger(logger);
     }
 
     private void toggleCheckboxes()
@@ -94,8 +100,10 @@ public class ServerController
         }
     }
 
-    public Logger getLogger()
+    public void setLights(Payload payload)
     {
-        return logger;
+        setRedCircle(payload.getRed() == ValidState.ON);
+        setYellowCircle(payload.getYellow() == ValidState.ON);
+        setGreenCircle(payload.getGreen() == ValidState.ON);
     }
 }

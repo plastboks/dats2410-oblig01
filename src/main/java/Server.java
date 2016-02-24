@@ -15,6 +15,8 @@ import java.io.IOException;
 
 public class Server extends Application
 {
+    private ServerController serverController;
+
     public static void main(String... args)
     {
         launch(args);
@@ -27,12 +29,20 @@ public class Server extends Application
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
-        ServerController serverController = loader.getController();
+        serverController = loader.getController();
         serverController.pushLoggerToDispatcher();
 
         server.setTitle("Server");
         server.setScene(scene);
         server.show();
+    }
+
+    @Override
+    public void stop() throws Exception
+    {
+        super.stop();
+
+        serverController.killAutoThread();
     }
 }
 

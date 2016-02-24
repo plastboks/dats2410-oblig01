@@ -15,10 +15,10 @@ public class ProtocolGenerator
 
         private Payload()
         {
-            generate(red, yellow, green);
+            generate();
         }
 
-        private void generate(ValidState green, ValidState yellow, ValidState red)
+        private void generate()
         {
             load = String.format("%d;%d;%d",
                     green == ValidState.OFF ? 0 : 1,
@@ -30,22 +30,55 @@ public class ProtocolGenerator
 
         public Payload red(ValidState red)
         {
-            generate(this.green, this.yellow, red);
+            this.red = red;
+            generate();
             return this;
         }
 
         public Payload yellow(ValidState yellow)
         {
-            generate(this.green, yellow, this.red);
+            this.yellow = yellow;
+            generate();
             return this;
         }
 
         public Payload green(ValidState green)
         {
-            generate(green, this.yellow, this.red);
+            this.green = green;
+            generate();
             return this;
         }
 
         public String get() { return load; }
+
+        public ValidState getRed()
+        {
+            return red;
+        }
+
+        public void setRed(ValidState red)
+        {
+            this.red = red;
+        }
+
+        public ValidState getYellow()
+        {
+            return yellow;
+        }
+
+        public void setYellow(ValidState yellow)
+        {
+            this.yellow = yellow;
+        }
+
+        public ValidState getGreen()
+        {
+            return green;
+        }
+
+        public void setGreen(ValidState green)
+        {
+            this.green = green;
+        }
     }
 }

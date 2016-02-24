@@ -10,15 +10,20 @@ import java.util.List;
 /**
  * Created by alex on 2/24/16.
  */
-public class AutoLogic implements Runnable
+public class AutoLogic extends Thread
 {
     private List<ProtocolGenerator.Payload> payloadList;
     private boolean state;
+    private boolean running = true;
+
+    private int randomTimer = 3000; // not very random...
 
     private ServerDispatcher dispatcher;
+    private ServerController controller;
 
-    public AutoLogic(ServerDispatcher dispatcher)
+    public AutoLogic(ServerController controller, ServerDispatcher dispatcher)
     {
+        this.controller = controller;
         this.dispatcher = dispatcher;
 
         payloadList = new ArrayList<>();
@@ -34,18 +39,24 @@ public class AutoLogic implements Runnable
         this.state = state;
     }
 
+    public void kill()
+    {
+        running = false;
+    }
+
     @Override
     public void run()
     {
         int i = 0;
-        while (true) {
+        while (running) {
             try {
-                Thread.sleep(3000);
                 if (state) {
-                    dispatcher.newMessage(payloadList.get(i++ % payloadList.size()));
+                    controller.setLights(payloadList.get(i % payloadList.size()));
+                    dispatcher.newMessage(payloadList.get(i % payloadList.size()));
+                    i++;
                 }
-            } catch (InterruptedException ie) {
-            }
+                Thread.sleep(randomTimer);
+            } catch (InterruptedException ie) { }
         }
     }
 }

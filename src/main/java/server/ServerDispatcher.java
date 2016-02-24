@@ -72,6 +72,7 @@ public class ServerDispatcher implements Runnable
         // send to MessageHandler.
         MessageHandler.inst.setMessage(payload);
         // signal threads about
+        logger.push(payload.get());
         threads.forEach(thread -> thread.update());
     }
 
