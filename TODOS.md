@@ -8,7 +8,7 @@
 - [ ] Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
 - [ ] Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")(S)
 - [ ] Skrive en protollgenerator (serversiden) som skaper datastrengene til klientene.
-- [ ] Lage en statisk klasse (singleton) som nåværende datasignal for sockettrådene.
+- [ ] Lage en statisk klasse (singleton) som nåværende datasignal for sockettrådene. (hp)
 - [ ] Sikre at sockettrådene til serverkoden (poc) fungerer tilstrekkelig.
 - [ ] Lage logikk for "automodus" (dynamisk)
 - [ ] Skrive en logger for server og klientsiden (ingen lagring til fil, kun minne)
