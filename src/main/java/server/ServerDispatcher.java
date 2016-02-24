@@ -1,6 +1,6 @@
 package main.java.server;
 
-import main.java.poc.SocketThread;
+import main.java.server.SocketThread;
 import main.java.util.ProtocolGenerator;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ServerDispatcher implements Runnable {
 
     private static ServerDispatcher serverDispatcher = null;
-    private List<Thread> threads = null;
+    private List<SocketThread> threads = null;
     private ServerSocket listener = null;
     private static final int port = 8080;
 
@@ -33,7 +33,7 @@ public class ServerDispatcher implements Runnable {
      * @param socketThread
      * @return Removes a SocketThread from the list.
      */
-    protected synchronized boolean remove(SocketThread socketThread)
+    private synchronized boolean remove(SocketThread socketThread)
     {
         return threads.remove(socketThread);
     }
@@ -41,7 +41,7 @@ public class ServerDispatcher implements Runnable {
     /**
      * @return Return alive threads.
      */
-    protected synchronized List<Thread> getThreads()
+    private synchronized List<SocketThread> getThreads()
     {
         return threads;
     }
@@ -60,9 +60,12 @@ public class ServerDispatcher implements Runnable {
     /**
      * Notify threads that MessageHandler has signal to them.
      */
-    protected void newMessage(ProtocolGenerator.Payload payload)
+    private void newMessage(ProtocolGenerator.Payload payload)
     {
-        threads.forEach(thread -> thread.update(payload));
+        // send to MessageHandler.
+        MessageHandler.inst.setMessage(payload);
+        // signal threads about
+        threads.forEach(thread -> thread.update());
     }
 
     @Override
