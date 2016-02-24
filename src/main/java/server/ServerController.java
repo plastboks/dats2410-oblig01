@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.shape.Circle;
 import main.java.util.Constants;
+import main.java.view.Logger;
+
+import java.io.IOException;
 
 
 public class ServerController
@@ -17,14 +20,24 @@ public class ServerController
     private ServerDispatcher dispatcher;
     private AutoLogic auto;
 
+    @FXML
     private Circle redCircle, yellowCircle, greenCircle;
 
-    private CheckBox red, yellow, green;
+    @FXML
+    private CheckBox redBox, yellowBox, greenBox;
 
-    public ServerController(ServerDispatcher dispather)
+    @FXML
+    private Logger logger;
+
+    public ServerController() throws IOException
     {
-        this.dispatcher = dispather;
-        auto = new AutoLogic(dispather);
+    }
+
+    public ServerController(ServerDispatcher dispatcher) throws IOException
+    {
+        this();
+        this.dispatcher = dispatcher;
+        auto = new AutoLogic(dispatcher);
         auto.run();
     }
 
@@ -42,37 +55,47 @@ public class ServerController
         toggleCheckboxes();
     }
 
+    public void pushLoggerToDispatcher() throws IOException
+    {
+        ServerDispatcher.getInstance().setLogger(logger);
+    }
+
     private void toggleCheckboxes()
     {
-        red.setDisable(autoToggle);
-        yellow.setDisable(autoToggle);
-        green.setDisable(autoToggle);
+        redBox.setDisable(autoToggle);
+        yellowBox.setDisable(autoToggle);
+        greenBox.setDisable(autoToggle);
     }
 
     private void setRedCircle(boolean state)
     {
         if (state) {
-            red.setBackground(Constants.RED);
+            redCircle.setFill(Constants.RED);
         } else {
-            red.setBackground(Constants.GRAY);
+            redCircle.setFill(Constants.GRAY);
         }
     }
 
     private void setYellowCircle(boolean state)
     {
         if (state) {
-            yellow.setBackground(Constants.YELLOW);
+            yellowCircle.setFill(Constants.YELLOW);
         } else {
-            yellow.setBackground(Constants.GRAY);
+            yellowCircle.setFill(Constants.GRAY);
         }
     }
 
     private void setGreenCircle(boolean state)
     {
         if (state) {
-            green.setBackground(Constants.GREEN);
+            greenCircle.setFill(Constants.GREEN);
         } else {
-            green.setBackground(Constants.GRAY);
+            greenCircle.setFill(Constants.GRAY);
         }
+    }
+
+    public Logger getLogger()
+    {
+        return logger;
     }
 }

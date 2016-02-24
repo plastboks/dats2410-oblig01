@@ -9,24 +9,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.java.server.ServerController;
 
 import java.io.IOException;
 
-public class Server extends Application {
+public class Server extends Application
+{
     public static void main(String... args)
     {
         launch(args);
     }
 
     @Override
-    public void start(Stage server) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("gui/server.mockup.fxml"));
-        Scene scene = new Scene(parent);
+    public void start(Stage server) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/server.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+
+        ServerController serverController = loader.getController();
+        serverController.pushLoggerToDispatcher();
+
         server.setTitle("Server");
         server.setScene(scene);
         server.show();
     }
-
 }
 
 

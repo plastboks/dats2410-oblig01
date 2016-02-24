@@ -1,7 +1,8 @@
 package main.java.server;
 
-import main.java.server.SocketThread;
+import com.sun.istack.internal.NotNull;
 import main.java.util.ProtocolGenerator;
+import main.java.view.Logger;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -12,15 +13,18 @@ import java.util.List;
 /**
  * Created by hans on 23.02.16.
  */
-public class ServerDispatcher implements Runnable {
+public class ServerDispatcher implements Runnable
+{
 
     private static ServerDispatcher serverDispatcher = null;
     private List<SocketThread> threads = null;
     private ServerSocket listener = null;
     private static final int port = 8080;
+    private Logger logger;
 
     /**
      * Private constructor disable other classes of making instances of ServerDispatcher.
+     *
      * @throws IOException
      */
     private ServerDispatcher() throws IOException
@@ -47,13 +51,14 @@ public class ServerDispatcher implements Runnable {
     }
 
     /**
-     * @Return the singleton ServerDispatcher instance.
      * @throws IOException
+     * @Return the singleton ServerDispatcher instance.
      */
-    protected static ServerDispatcher getInstance() throws IOException
+    public static ServerDispatcher getInstance() throws IOException
     {
-        if(serverDispatcher == null)
+        if (serverDispatcher == null)
             serverDispatcher = new ServerDispatcher();
+
         return serverDispatcher;
     }
 
@@ -72,28 +77,41 @@ public class ServerDispatcher implements Runnable {
     {
         try {
             listener.close();
-        } catch (IOException e){
+        } catch (IOException e) {
 
         }
 
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
         try {
-            if(serverDispatcher == null) {
+            if (serverDispatcher == null) {
                 serverDispatcher = new ServerDispatcher();
             }
-            while(true)
-            {
+            while (true) {
                 Socket client = listener.accept();
                 SocketThread socketThread = new SocketThread(client);
                 threads.add(socketThread);
                 socketThread.start();
+
+                pushToLogger(String.format("Client %s connected", client.getInetAddress()));
             }
 
-        } catch (IOException e){
+        } catch (IOException e) {
 
         }
+    }
+
+    private void pushToLogger(String str)
+    {
+        if (logger != null) logger.push("ServerDispatcher: " + str);
+    }
+
+    public void setLogger(@NotNull Logger logger)
+    {
+        this.logger = logger;
+        pushToLogger("Connected to logger");
     }
 }

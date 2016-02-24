@@ -1,9 +1,5 @@
 package main.java.util;
 
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 /**
@@ -11,15 +7,10 @@ import javafx.scene.paint.Color;
  */
 public class Constants
 {
-    public static final Background RED = new Background(
-            new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
+    public static final Color RED = Color.RED;
+    public static final Color YELLOW = Color.YELLOW;
+    public static final Color GREEN = Color.GREEN;
+    public static final Color GRAY = Color.GRAY;
 
-    public static final Background YELLOW = new Background(
-            new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY));
-
-    public static final Background GREEN = new Background(
-            new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY));
-
-    public static final Background GRAY = new Background(
-            new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
+    public static final String DATE_FORMAT = "yyyy-dd-MM HH:mm:ss";
 }
