@@ -40,7 +40,7 @@ public class ServerDispatcher implements Runnable {
         return serverDispatcher;
     }
 
-    protected void sendSignal()
+    protected void notifyThreads()
     {
 
     }
