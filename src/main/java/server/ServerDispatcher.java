@@ -25,6 +25,7 @@ public class ServerDispatcher implements Runnable {
      */
     private ServerDispatcher() throws IOException
     {
+        // Look for more suitable synchronized list.
         threads = new ArrayList<>();
         listener = new ServerSocket(port);
     }
@@ -50,7 +51,7 @@ public class ServerDispatcher implements Runnable {
      * @Return the singleton ServerDispatcher instance.
      * @throws IOException
      */
-    protected static ServerDispatcher getInstance() throws IOException
+    protected synchronized static ServerDispatcher getInstance() throws IOException
     {
         if(serverDispatcher == null)
             serverDispatcher = new ServerDispatcher();
@@ -60,7 +61,7 @@ public class ServerDispatcher implements Runnable {
     /**
      * Notify threads that MessageHandler has signal to them.
      */
-    protected void newMessage(ProtocolGenerator.Payload payload)
+    protected synchronized void newMessage(ProtocolGenerator.Payload payload)
     {
         // send to MessageHandler.
         MessageHandler.inst.setMessage(payload);
@@ -68,18 +69,22 @@ public class ServerDispatcher implements Runnable {
         threads.forEach(thread -> thread.update());
     }
 
-    protected void exit()
+    /**
+     * Closes the ServerSocket listener.
+     */
+    protected synchronized void exit()
     {
         try {
+            System.out.println("Closing server socket.");
             listener.close();
+            // Destroy this thread??
         } catch (IOException e){
-
+            System.out.println(e.getMessage());
         }
-
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         try {
             if(serverDispatcher == null) {
                 serverDispatcher = new ServerDispatcher();
@@ -93,7 +98,7 @@ public class ServerDispatcher implements Runnable {
             }
 
         } catch (IOException e){
-
+            System.out.println(e.getMessage());
         }
     }
 }

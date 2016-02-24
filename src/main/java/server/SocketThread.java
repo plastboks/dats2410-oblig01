@@ -1,7 +1,5 @@
 package main.java.server;
 
-import main.java.server.MessageHandler;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,16 +11,14 @@ import java.net.Socket;
  */
 public class SocketThread extends Thread {
 
-    private Socket connectSocket;
+    private Socket clientSocket;
     private static final String HEARTBEAT = "TICK";
     private static final int THREAD_SLEEP = 100;
-    private static final int MOD_NUM = 5;
+    private boolean newMessage = true; // MessageHandler has new message
 
-    private boolean newMessage = false;
-
-    public SocketThread(Socket connectSocket)
+    public SocketThread(Socket clientSocket)
     {
-        this.connectSocket = connectSocket;
+        this.clientSocket = clientSocket;
     }
 
     @Override
@@ -30,38 +26,39 @@ public class SocketThread extends Thread {
     {
         try (
                 PrintWriter out = new PrintWriter(
-                        connectSocket.getOutputStream(), true);
+                        clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(
-                        new InputStreamReader(connectSocket.getInputStream()));
+                        new InputStreamReader(clientSocket.getInputStream()));
         )
         {
-            String clientHost = connectSocket.getInetAddress().getHostAddress();
+            String clientHost = clientSocket.getInetAddress().getHostAddress();
             System.out.printf("Created new thread with %s\n", clientHost);
 
-            int c = 0;
             do {
                 Thread.sleep(THREAD_SLEEP);
 
-                if (++c % MOD_NUM == 0) {
+                if (newMessage) {
+                    newMessage = false;
                     out.println(MessageHandler.inst.getMessage());
                 } else {
                     out.println(HEARTBEAT);
                 }
+
                 System.out.println("pong");
 
             } while (in.readLine() != null);
 
             System.out.printf("Closed connection with %s\n", clientHost);
-            connectSocket.close();
+            clientSocket.close();
 
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void update()
+    public synchronized void update()
     {
-
+        newMessage = true;
     }
 }
 
