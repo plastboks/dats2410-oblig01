@@ -1,11 +1,13 @@
 package main.java.server;
 
 import main.java.poc.SocketThread;
+import main.java.util.ProtocolGenerator;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hans on 23.02.16.
@@ -13,26 +15,41 @@ import java.util.ArrayList;
 public class ServerDispatcher implements Runnable {
 
     private static ServerDispatcher serverDispatcher = null;
-    private ArrayList<Thread> clientThreads = null;
+    private List<Thread> threads = null;
     private ServerSocket listener = null;
     private static final int port = 8080;
 
+    /**
+     * Private constructor disable other classes of making instances of ServerDispatcher.
+     * @throws IOException
+     */
     private ServerDispatcher() throws IOException
     {
-        clientThreads = new ArrayList<>();
+        threads = new ArrayList<>();
         listener = new ServerSocket(port);
     }
 
+    /**
+     * @param socketThread
+     * @return Removes a SocketThread from the list.
+     */
     protected synchronized boolean remove(SocketThread socketThread)
     {
-        return clientThreads.remove(socketThread);
+        return threads.remove(socketThread);
     }
 
-    protected synchronized ArrayList<Thread> getThreads()
+    /**
+     * @return Return alive threads.
+     */
+    protected synchronized List<Thread> getThreads()
     {
-        return clientThreads;
+        return threads;
     }
 
+    /**
+     * @Return the singleton ServerDispatcher instance.
+     * @throws IOException
+     */
     protected static ServerDispatcher getInstance() throws IOException
     {
         if(serverDispatcher == null)
@@ -40,9 +57,12 @@ public class ServerDispatcher implements Runnable {
         return serverDispatcher;
     }
 
-    protected void notifyThreads()
+    /**
+     * Notify threads that MessageHandler has signal to them.
+     */
+    protected void newMessage(ProtocolGenerator.Payload payload)
     {
-
+        threads.forEach(thread -> thread.update(payload));
     }
 
     @Override
@@ -55,13 +75,12 @@ public class ServerDispatcher implements Runnable {
             {
                 Socket client = listener.accept();
                 SocketThread socketThread = new SocketThread(client);
-                clientThreads.add(socketThread);
+                threads.add(socketThread);
                 socketThread.start();
             }
 
         } catch (IOException e){
 
         }
-
     }
 }
