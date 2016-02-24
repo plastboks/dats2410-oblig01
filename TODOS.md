@@ -8,7 +8,6 @@
 - [ ] **HC** Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
 - [ ] **Simon** Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")(S)
 - [ ] **HP** Sikre at sockettrådene til serverkoden (poc) fungerer tilstrekkelig.
-- [ ] **HP** Sørge for at klienter som kobler til får siste gyldige datasignal.
 - [ ] Skrive dokumentasjon
 - [ ] Wireshark'e
 - [x] Skrive en tekstlig kommunikasjonsprotokoll med linjeskift som endetegn (som og inkluderer hartbeat sendingene)
@@ -19,3 +18,4 @@
 - [x] Undersøke hvordan (om) javatråder kan fingres (for å reagere på events) (evt en liste med tråder)
 - [x] **Alex** Skrive en logger for server og klientsiden (ingen lagring til fil, kun minne)
 - [x] **Alex** Teste logikk for "automodus" (dynamisk)
+- [x] **HP** Sørge for at klienter som kobler til får siste gyldige datasignal.
