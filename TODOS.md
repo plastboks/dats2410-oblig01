@@ -1,6 +1,6 @@
 # TODOS
 
-- [ ] Løse hartbeat problematikken på en elegant måte (med Java Sockets som utgangspunkt)
+- [ ] **HP** Løse hartbeat problematikken på en elegant måte (med Java Sockets som utgangspunkt)
 - [ ] **Simon** Skrive client GUI (fxml) og tilhørende java klasser.
 - [ ] **Erlend** Skrive server GUI (fxml) og tilhørende java klasser.
 - [ ] Lage et diagram (UML?) for oppbygging av clienten.
@@ -8,8 +8,6 @@
 - [ ] **HC** Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
 - [ ] **Simon** Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")(S)
 - [ ] **HP** Sikre at sockettrådene til serverkoden (poc) fungerer tilstrekkelig.
-- [ ] Teste logikk for "automodus" (dynamisk)
-- [ ] **Alex** Skrive en logger for server og klientsiden (ingen lagring til fil, kun minne)
 - [ ] **HP** Sørge for at klienter som kobler til får siste gyldige datasignal.
 - [ ] Skrive dokumentasjon
 - [ ] Wireshark'e
@@ -19,3 +17,5 @@
 - [x] Lage en statisk klasse (singleton) som nåværende datasignal for sockettrådene. (hp)
 - [x] Lage logikk for "automodus" (dynamisk)
 - [x] Undersøke hvordan (om) javatråder kan fingres (for å reagere på events) (evt en liste med tråder)
+- [x] **Alex** Skrive en logger for server og klientsiden (ingen lagring til fil, kun minne)
+- [x] **Alex** Teste logikk for "automodus" (dynamisk)
