@@ -1,6 +1,6 @@
 package main.java.server;
 
-import main.java.poc.Message;
+import main.java.server.MessageHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +17,8 @@ public class SocketThread extends Thread {
     private static final String HEARTBEAT = "TICK";
     private static final int THREAD_SLEEP = 100;
     private static final int MOD_NUM = 5;
+
+    private boolean newMessage = false;
 
     public SocketThread(Socket connectSocket)
     {
@@ -41,7 +43,7 @@ public class SocketThread extends Thread {
                 Thread.sleep(THREAD_SLEEP);
 
                 if (++c % MOD_NUM == 0) {
-                    out.println(Message.get());
+                    out.println(MessageHandler.inst.getMessage());
                 } else {
                     out.println(HEARTBEAT);
                 }
@@ -57,7 +59,10 @@ public class SocketThread extends Thread {
         }
     }
 
-    public void update(){}
+    public void update()
+    {
+
+    }
 }
 
 

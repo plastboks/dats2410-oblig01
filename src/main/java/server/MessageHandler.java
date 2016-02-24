@@ -22,7 +22,7 @@ public enum MessageHandler
         this.message = payload.get();
     }
 
-    public String getMessage(String message)
+    public String getMessage()
     {
         return message;
     }

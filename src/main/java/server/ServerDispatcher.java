@@ -33,7 +33,7 @@ public class ServerDispatcher implements Runnable {
      * @param socketThread
      * @return Removes a SocketThread from the list.
      */
-    private synchronized boolean remove(SocketThread socketThread)
+    protected synchronized boolean remove(SocketThread socketThread)
     {
         return threads.remove(socketThread);
     }
@@ -41,7 +41,7 @@ public class ServerDispatcher implements Runnable {
     /**
      * @return Return alive threads.
      */
-    private synchronized List<SocketThread> getThreads()
+    protected synchronized List<SocketThread> getThreads()
     {
         return threads;
     }
@@ -60,12 +60,22 @@ public class ServerDispatcher implements Runnable {
     /**
      * Notify threads that MessageHandler has signal to them.
      */
-    private void newMessage(ProtocolGenerator.Payload payload)
+    protected void newMessage(ProtocolGenerator.Payload payload)
     {
         // send to MessageHandler.
         MessageHandler.inst.setMessage(payload);
         // signal threads about
         threads.forEach(thread -> thread.update());
+    }
+
+    protected void exit()
+    {
+        try {
+            listener.close();
+        } catch (IOException e){
+
+        }
+
     }
 
     @Override
