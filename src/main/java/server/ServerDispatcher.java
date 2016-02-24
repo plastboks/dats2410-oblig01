@@ -90,8 +90,8 @@ public class ServerDispatcher implements Runnable {
         try {
             if(serverDispatcher == null) {
                 serverDispatcher = new ServerDispatcher();
-            running = true;
             }
+            running = true;
             while(running)
             {
                 Socket client = listener.accept();
