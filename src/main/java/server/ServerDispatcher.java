@@ -18,6 +18,7 @@ public class ServerDispatcher implements Runnable {
     private List<SocketThread> threads = null;
     private ServerSocket listener = null;
     private static final int port = 8080;
+    private boolean running = false;
 
     /**
      * Private constructor disable other classes of making instances of ServerDispatcher.
@@ -78,6 +79,7 @@ public class ServerDispatcher implements Runnable {
             System.out.println("Closing server socket.");
             listener.close();
             // Destroy this thread??
+            running = false;
         } catch (IOException e){
             System.out.println(e.getMessage());
         }
@@ -88,8 +90,9 @@ public class ServerDispatcher implements Runnable {
         try {
             if(serverDispatcher == null) {
                 serverDispatcher = new ServerDispatcher();
+            running = true;
             }
-            while(true)
+            while(running)
             {
                 Socket client = listener.accept();
                 SocketThread socketThread = new SocketThread(client);
