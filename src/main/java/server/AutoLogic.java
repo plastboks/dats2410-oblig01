@@ -4,6 +4,7 @@ import main.java.util.ProtocolGenerator;
 import main.java.util.ProtocolGenerator.ValidState;
 import main.java.util.ProtocolGenerator.Payload;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public class AutoLogic implements Runnable
     public AutoLogic(ServerDispatcher dispatcher)
     {
         this.dispatcher = dispatcher;
+
+        payloadList = new ArrayList<>();
 
         payloadList.add(Payload.with().red(ValidState.ON));
         payloadList.add(Payload.with().red(ValidState.ON).yellow(ValidState.ON));
@@ -39,7 +42,7 @@ public class AutoLogic implements Runnable
             try {
                 Thread.sleep(3000);
                 if (state) {
-                    dispatcher.setPayload(payloadList.get(i++ % payloadList.size()));
+                    dispatcher.newMessage(payloadList.get(i++ % payloadList.size()));
                 }
             } catch (InterruptedException ie) {
             }
