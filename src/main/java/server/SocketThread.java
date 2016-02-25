@@ -14,7 +14,7 @@ public class SocketThread extends Thread {
     private Socket clientSocket;
     private static final String HEARTBEAT = "TICK";
     private static final int THREAD_SLEEP = 100;
-    private boolean newMessage = true; // MessageHandler has new message
+    private volatile boolean newMessage = true; // MessageHandler has new message
 
     public SocketThread(Socket clientSocket)
     {

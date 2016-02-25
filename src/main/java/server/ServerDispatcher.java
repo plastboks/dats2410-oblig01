@@ -12,16 +12,24 @@ import java.util.List;
 
 /**
  * Created by hans on 23.02.16.
+ *
+ * ServerDispatcher is purposed to listen to incoming socket connections,
+ * it will accept these, and instantiate SocketThreads, then manage them in
+ * the List: threads.
+ *
+ * On the other side ServerDispatcher will get Payloads of signals from the
+ * ProtocolGenerator class and push these signals further to the MessageHandler
+ * class and also notify each SocketThread that there is a new signal to pull.
  */
 public class ServerDispatcher implements Runnable
 {
-
-    private static ServerDispatcher serverDispatcher = null;
-    private List<SocketThread> threads = null;
-    private ServerSocket listener = null;
-    private static final int port = 8080;
+    private static final int PORT = 8080;
+    private static final int THREAD_SLEEP = 100;
+    private static ServerDispatcher serverDispatcher;
+    private ServerSocket listener;
     private Logger logger;
-    private boolean running = false;
+    private volatile List<SocketThread> threads;
+    private volatile boolean running = true;
 
     /**
      * Private constructor disable other classes of making instances of ServerDispatcher.
@@ -32,7 +40,7 @@ public class ServerDispatcher implements Runnable
     {
         // Look for more suitable synchronized list.
         threads = new ArrayList<>();
-        listener = new ServerSocket(port);
+        listener = new ServerSocket(PORT);
     }
 
     /**
@@ -82,10 +90,10 @@ public class ServerDispatcher implements Runnable
     protected synchronized void exit()
     {
         try {
-            System.out.println("Closing server socket.");
             listener.close();
             // Destroy this thread??
             running = false;
+            pushToLogger("ServerDispatcher stopped.");
         } catch (IOException e){
             System.out.println(e.getMessage());
         }
@@ -97,9 +105,9 @@ public class ServerDispatcher implements Runnable
             if (serverDispatcher == null) {
                 serverDispatcher = new ServerDispatcher();
             }
-            running = true;
             while(running)
             {
+                Thread.sleep(THREAD_SLEEP);
                 Socket client = listener.accept();
                 SocketThread socketThread = new SocketThread(client);
                 threads.add(socketThread);
@@ -110,7 +118,10 @@ public class ServerDispatcher implements Runnable
 
         } catch (IOException e){
             System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
         }
+
     }
 
     private void pushToLogger(String str)
