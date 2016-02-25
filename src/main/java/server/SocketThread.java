@@ -1,5 +1,8 @@
 package main.java.server;
 
+import com.sun.istack.internal.NotNull;
+import main.java.view.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +15,7 @@ import java.net.Socket;
 public class SocketThread extends Thread {
 
     private Socket clientSocket;
+    private Logger logger;
     private static final String HEARTBEAT = "TICK";
     private static final int THREAD_SLEEP = 100;
     private volatile boolean readSignal = false;
@@ -32,7 +36,8 @@ public class SocketThread extends Thread {
         )
         {
             String clientHost = clientSocket.getInetAddress().getHostAddress();
-            System.out.printf("Created new thread with %s\n", clientHost);
+
+            pushToLogger("Created new thread with " + clientHost);
 
             do {
                 Thread.sleep(THREAD_SLEEP);
@@ -48,7 +53,7 @@ public class SocketThread extends Thread {
 
             } while (in.readLine() != null);
 
-            System.out.printf("Closed connection with %s\n", clientHost);
+            pushToLogger("Closed connection with " + clientHost);
             clientSocket.close();
             ServerDispatcher.getInstance().remove(this);
 
@@ -57,9 +62,25 @@ public class SocketThread extends Thread {
         }
     }
 
+    /**
+     * The SocketThreads update method notify the
+     * heartbeat-loop about a new message at the
+     * MessageHandler class.
+     */
     public synchronized void update()
     {
         readSignal = false;
+    }
+
+    private void pushToLogger(String str)
+    {
+        if (logger != null) logger.push("SocketThread: " + str);
+    }
+
+    public void setLogger(@NotNull Logger logger)
+    {
+        this.logger = logger;
+        pushToLogger("Connected to logger");
     }
 }
 

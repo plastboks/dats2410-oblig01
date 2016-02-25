@@ -31,6 +31,7 @@ public class ServerDispatcher implements Runnable
     private volatile List<SocketThread> threads;
     private volatile boolean isRunning = true;
     private final Object threadListLock = new Object();
+    private final Object listenerLock = new Object();
 
     /**
      * Private constructor disable other classes of making instances of ServerDispatcher.
@@ -61,7 +62,13 @@ public class ServerDispatcher implements Runnable
             {
                 Thread.sleep(THREAD_SLEEP);
 
-                Socket client = listener.accept();
+                Socket client;
+
+                synchronized (listenerLock)
+                {
+                    client = listener.accept();
+                }
+
                 SocketThread socketThread = new SocketThread(client);
 
                 synchronized (threadListLock)
@@ -109,29 +116,49 @@ public class ServerDispatcher implements Runnable
     }
 
     /**
-     * Notify threads that MessageHandler has signal to them.
+     * Method newMessage takes Payload and forwards it to
+     * the MessageHandler who will distribute the Payload
+     * further.
+     *
+     * Next the newMessage method takes care of signaling
+     * each SocketThread that there is a new Payload ready
+     * for polling at the MessageHandler.
+     *
+     * @param payload
      */
     protected void newMessage(Payload payload)
     {
-        // send to MessageHandler.
+
         MessageHandler.inst.setMessage(payload);
-        // signal threads about
+
         logger.push(MessageHandler.inst.getMessage());
-        threads.forEach(thread -> thread.update());
+
+        synchronized (threadListLock)
+        {
+            threads.forEach(thread -> thread.update());
+        }
     }
 
     /**
-     * Closes the ServerSocket listener.
+     * The requestStop method disconnects the ServerSocket,
+     * and stops the HeartBeat loop from running. This
+     * stops the ServerDispatching.
      */
     protected void requestStop()
     {
         try
         {
-            listener.close();
             isRunning = false;
+            Thread.sleep(1);
+            synchronized (listenerLock)
+            {
+                listener.close();
+            }
         }
         catch (IOException e)
         {
+            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -140,14 +167,13 @@ public class ServerDispatcher implements Runnable
      * @param socketThread
      * @return Removes a SocketThread from the list.
      */
-    protected boolean remove(SocketThread socketThread)
+    protected void remove(SocketThread socketThread)
     {
         synchronized (threadListLock)
         {
-            return threads.remove(socketThread);
+            threads.remove(socketThread);
         }
     }
-
 
     private void pushToLogger(String str)
     {
