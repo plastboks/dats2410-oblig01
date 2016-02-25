@@ -1,7 +1,7 @@
 package main.java.server;
 
 import com.sun.istack.internal.NotNull;
-import main.java.util.ProtocolGenerator;
+import main.java.util.Payload;
 import main.java.view.Logger;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.List;
  * the List: threads.
  *
  * On the other side ServerDispatcher will get Payloads of signals from the
- * ProtocolGenerator class and push these signals further to the MessageHandler
+ * Payload class and push these signals further to the MessageHandler
  * class and also notify each SocketThread that there is a new signal to pull.
  */
 public class ServerDispatcher implements Runnable
@@ -75,12 +75,12 @@ public class ServerDispatcher implements Runnable
     /**
      * Notify threads that MessageHandler has signal to them.
      */
-    protected synchronized void newMessage(ProtocolGenerator.Payload payload)
+    protected synchronized void newMessage(Payload payload)
     {
         // send to MessageHandler.
         MessageHandler.inst.setMessage(payload);
         // signal threads about
-        logger.push(payload.get());
+        logger.push(MessageHandler.inst.getMessage());
         threads.forEach(thread -> thread.update());
     }
 

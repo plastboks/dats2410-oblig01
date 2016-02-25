@@ -1,8 +1,7 @@
 package main.java.server;
 
-import main.java.util.ProtocolGenerator;
-import main.java.util.ProtocolGenerator.ValidState;
-import main.java.util.ProtocolGenerator.Payload;
+import main.java.util.Payload.ValidState;
+import main.java.util.Payload;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
  */
 public class AutoLogic extends Thread
 {
-    private List<ProtocolGenerator.Payload> payloadList;
+    private List<Payload> payloadList;
     private boolean state;
     private boolean running = true;
 

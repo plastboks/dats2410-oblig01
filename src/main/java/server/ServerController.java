@@ -4,19 +4,17 @@
 
 package main.java.server;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.shape.Circle;
 import main.java.util.Constants;
-import main.java.util.ProtocolGenerator;
 import main.java.view.Logger;
 
 import java.io.IOException;
 
-import main.java.util.ProtocolGenerator.ValidState;
-import main.java.util.ProtocolGenerator.Payload;
+import main.java.util.Payload.ValidState;
+import main.java.util.Payload;
 
 
 public class ServerController
