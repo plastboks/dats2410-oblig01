@@ -1,4 +1,4 @@
-package client;
+package main.java.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +20,7 @@ public class Client
     private static final String SERVER_BEAT = "tick";
 
     /* Få inn instans av (client)APP.java */
+    private static ClientController controller;
 
     public static void main(String[] args) throws InterruptedException
     {
@@ -44,7 +45,7 @@ public class Client
                         new InputStreamReader(soc.getInputStream()));
         )
         {
-            Protocolparser parser =  new Protocolparser();
+            Protocolparser parser =  new Protocolparser(controller);
             String receivedText;
             while ((receivedText = in.readLine()) != null) {
 
