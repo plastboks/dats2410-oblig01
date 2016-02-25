@@ -29,7 +29,8 @@ public class ServerDispatcher implements Runnable
     private ServerSocket listener;
     private Logger logger;
     private volatile List<SocketThread> threads;
-    private volatile boolean running = true;
+    private volatile boolean isRunning = true;
+    private final Object threadListLock = new Object();
 
     /**
      * Private constructor disable other classes of making instances of ServerDispatcher.
@@ -39,32 +40,67 @@ public class ServerDispatcher implements Runnable
     private ServerDispatcher() throws IOException
     {
         // Look for more suitable synchronized list.
-        threads = new ArrayList<>();
+        synchronized (threadListLock)
+        {
+            threads = new ArrayList<>();
+        }
+
         listener = new ServerSocket(PORT);
     }
 
-    /**
-     * @param socketThread
-     * @return Removes a SocketThread from the list.
-     */
-    protected synchronized boolean remove(SocketThread socketThread)
+    @Override
+    public void run()
     {
-        return threads.remove(socketThread);
+        try
+        {
+            if (serverDispatcher == null)
+            {
+                serverDispatcher = new ServerDispatcher();
+            }
+            while(isRunning)
+            {
+                Thread.sleep(THREAD_SLEEP);
+
+                Socket client = listener.accept();
+                SocketThread socketThread = new SocketThread(client);
+
+                synchronized (threadListLock)
+                {
+                    threads.add(socketThread);
+                }
+
+                socketThread.start();
+
+                pushToLogger(String.format("Client %s connected", client.getInetAddress()));
+            }
+
+        }
+        catch (IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        catch (InterruptedException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
-     * @return Return alive threads.
+     * @return Return SocketThreads
      */
-    protected synchronized List<SocketThread> getThreads()
+    protected List<SocketThread> getThreads()
     {
-        return threads;
+        synchronized (threadListLock)
+        {
+            return threads;
+        }
     }
 
     /**
      * @throws IOException
-     * @Return the singleton ServerDispatcher instance.
+     * @return the singleton ServerDispatcher instance.
      */
-    protected synchronized static ServerDispatcher getInstance() throws IOException
+    protected static ServerDispatcher getInstance() throws IOException
     {
         if (serverDispatcher == null)
             serverDispatcher = new ServerDispatcher();
@@ -75,7 +111,7 @@ public class ServerDispatcher implements Runnable
     /**
      * Notify threads that MessageHandler has signal to them.
      */
-    protected synchronized void newMessage(Payload payload)
+    protected void newMessage(Payload payload)
     {
         // send to MessageHandler.
         MessageHandler.inst.setMessage(payload);
@@ -87,42 +123,31 @@ public class ServerDispatcher implements Runnable
     /**
      * Closes the ServerSocket listener.
      */
-    protected synchronized void exit()
+    protected void requestStop()
     {
-        try {
+        try
+        {
             listener.close();
-            // Destroy this thread??
-            running = false;
-            pushToLogger("ServerDispatcher stopped.");
-        } catch (IOException e){
+            isRunning = false;
+        }
+        catch (IOException e)
+        {
             System.out.println(e.getMessage());
         }
     }
 
-    @Override
-    public synchronized void run() {
-        try {
-            if (serverDispatcher == null) {
-                serverDispatcher = new ServerDispatcher();
-            }
-            while(running)
-            {
-                Thread.sleep(THREAD_SLEEP);
-                Socket client = listener.accept();
-                SocketThread socketThread = new SocketThread(client);
-                threads.add(socketThread);
-                socketThread.start();
-
-                pushToLogger(String.format("Client %s connected", client.getInetAddress()));
-            }
-
-        } catch (IOException e){
-            System.out.println(e.getMessage());
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
+    /**
+     * @param socketThread
+     * @return Removes a SocketThread from the list.
+     */
+    protected boolean remove(SocketThread socketThread)
+    {
+        synchronized (threadListLock)
+        {
+            return threads.remove(socketThread);
         }
-
     }
+
 
     private void pushToLogger(String str)
     {

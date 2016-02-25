@@ -14,7 +14,7 @@ public class SocketThread extends Thread {
     private Socket clientSocket;
     private static final String HEARTBEAT = "TICK";
     private static final int THREAD_SLEEP = 100;
-    private volatile boolean newMessage = true; // MessageHandler has new message
+    private volatile boolean readSignal = false;
 
     public SocketThread(Socket clientSocket)
     {
@@ -37,8 +37,8 @@ public class SocketThread extends Thread {
             do {
                 Thread.sleep(THREAD_SLEEP);
 
-                if (newMessage) {
-                    newMessage = false;
+                if (!readSignal) {
+                    readSignal = true;
                     out.println(MessageHandler.inst.getMessage());
                 } else {
                     out.println(HEARTBEAT);
@@ -50,6 +50,7 @@ public class SocketThread extends Thread {
 
             System.out.printf("Closed connection with %s\n", clientHost);
             clientSocket.close();
+            ServerDispatcher.getInstance().remove(this);
 
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
@@ -58,7 +59,7 @@ public class SocketThread extends Thread {
 
     public synchronized void update()
     {
-        newMessage = true;
+        readSignal = false;
     }
 }
 
