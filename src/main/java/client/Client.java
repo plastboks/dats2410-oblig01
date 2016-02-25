@@ -19,12 +19,14 @@ public class Client
     private static final String HARTBEAT = "tock";
     private static final String SERVER_BEAT = "tick";
 
-    /* Få inn instans av (client)APP.java */
+    /* Få inn instans av (clientcontroller)APP.java */
     private static ClientController controller;
 
-    public static void main(String[] args) throws InterruptedException
-    {
 
+
+    public static void main(String[] args)throws InterruptedException
+    {
+        System.out.print("JE KJEM HIT!");
         if (args.length < 2) {
             System.out.printf("Please provide the host and port argument!\n");
             System.exit(-1);

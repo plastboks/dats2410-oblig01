@@ -1,9 +1,14 @@
 package main.java.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.MenuItem;
 import javafx.scene.shape.Circle;
+import main.java.*;
 import main.java.util.Constants;
 import main.java.util.Payload;
 import main.java.view.Logger;
@@ -23,9 +28,16 @@ public class ClientController {
     @FXML
     private Logger logger;
 
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+
+        Platform.exit();
+    }
+
+
     public ClientController() throws IOException
     {
-
+        new main.java.Client();
     }
 
 
@@ -62,5 +74,12 @@ public class ClientController {
         setYellowCircle(s[1].equals("1"));
         setGreenCircle(s[0].equals("1"));
     }
+
+
+    @FXML
+    public void exitApplication(ActionEvent event) {
+        Platform.exit();
+    }
+
 
 }
