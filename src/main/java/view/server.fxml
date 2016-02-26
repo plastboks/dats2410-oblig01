@@ -17,16 +17,6 @@
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
         </menus>
       </MenuBar>
    </top>
@@ -47,10 +37,9 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Circle fx:id="redCircle" fill="RED" radius="36.0" stroke="RED" strokeType="INSIDE" strokeWidth="5.0" />
-                              <Circle fx:id="yellowCircle" fill="YELLOW" radius="36.0" stroke="#f2f200"
-                                      strokeType="INSIDE" strokeWidth="5.0" GridPane.rowIndex="1" />
-                              <Circle fx:id="greenCircle" fill="LIME" radius="36.0" stroke="#00ee00" strokeType="INSIDE" strokeWidth="5.0" GridPane.rowIndex="2" />
+                              <Circle fx:id="redCircle" fill="GRAY" radius="36.0" GridPane.rowIndex="0"/>
+                              <Circle fx:id="yellowCircle" fill="GRAY" radius="36.0" GridPane.rowIndex="1" />
+                              <Circle fx:id="greenCircle" fill="GRAY" radius="36.0" GridPane.rowIndex="2" />
                            </children>
                            <BorderPane.margin>
                               <Insets right="10.0" />

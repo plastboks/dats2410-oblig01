@@ -9,7 +9,7 @@ public class Constants
 {
     public static final Color RED = Color.RED;
     public static final Color YELLOW = Color.YELLOW;
-    public static final Color GREEN = Color.GREEN;
+    public static final Color GREEN = Color.LIME;
     public static final Color GRAY = Color.GRAY;
 
     public static final String DATE_FORMAT = "yyyy-dd-MM HH:mm:ss";
