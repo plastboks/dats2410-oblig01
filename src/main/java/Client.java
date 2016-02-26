@@ -31,6 +31,7 @@ public class Client extends Application
         Scene scene = new Scene(root);
 
         clientController = loader.getController();
+        clientController.initClientSocket();
         clientController.pushLoggerToClientSocket();
 
 

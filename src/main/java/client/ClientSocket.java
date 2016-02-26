@@ -19,7 +19,7 @@ public class ClientSocket extends Thread
 
     private static final int THREAD_SLEEP = 100;
     private static final String HARTBEAT = "tock";
-    private static final String SERVER_BEAT = "TICK";
+    private static final String SERVER_BEAT = "tick";
 
     private static ClientController controller;
 

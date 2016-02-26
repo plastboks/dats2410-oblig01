@@ -1,6 +1,5 @@
 package main.java.server;
 
-import main.java.poc.Message;
 import main.java.util.Payload;
 import main.java.util.Payload.ValidState;
 
@@ -15,7 +14,7 @@ public enum MessageHandler
 
     MessageHandler()
     {
-        message = generate(Payload.with());
+        setMessage(Payload.with());
     }
 
     public void setMessage(Payload payload)

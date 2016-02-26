@@ -25,10 +25,14 @@ public class ClientController {
     private ClientSocket clientSocket;
 
 
-    public ClientController() throws IOException
+    public ClientController() {}
+
+    public void initClientSocket()
     {
-        clientSocket = new ClientSocket(this);
-        clientSocket.start();
+        if (clientSocket == null) {
+            clientSocket = new ClientSocket(this);
+            clientSocket.start();
+        }
     }
 
     public void pushLoggerToClientSocket()
