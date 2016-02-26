@@ -15,15 +15,13 @@ import java.net.Socket;
 public class SocketThread extends Thread {
 
     private Socket clientSocket;
-    private Logger logger;
     private static final String HEARTBEAT = "TICK";
     private static final int THREAD_SLEEP = 100;
     private volatile boolean readSignal = false;
 
-    public SocketThread(Socket clientSocket, Logger logger)
+    public SocketThread(Socket clientSocket)
     {
         this.clientSocket = clientSocket;
-        this.logger = logger;
     }
 
     @Override
@@ -38,8 +36,6 @@ public class SocketThread extends Thread {
         {
             String clientHost = clientSocket.getInetAddress().getHostAddress();
 
-            pushToLogger("Created new thread with " + clientHost);
-
             do {
                 Thread.sleep(THREAD_SLEEP);
 
@@ -50,17 +46,19 @@ public class SocketThread extends Thread {
                     out.println(HEARTBEAT);
                 }
 
-                System.out.println("pong");
-
             } while (in.readLine() != null);
 
-            pushToLogger("Closed connection with " + clientHost);
             clientSocket.close();
             ServerDispatcher.getInstance().remove(this);
 
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    protected String getClientHost()
+    {
+        return clientSocket.getInetAddress().getHostAddress();
     }
 
     /**
@@ -72,18 +70,4 @@ public class SocketThread extends Thread {
     {
         readSignal = false;
     }
-
-    private void pushToLogger(String str)
-    {
-        if (logger != null) logger.push("SocketThread: " + str);
-    }
-
-    public void setLogger(@NotNull Logger logger)
-    {
-        this.logger = logger;
-        pushToLogger("Connected to logger");
-    }
 }
-
-
-
