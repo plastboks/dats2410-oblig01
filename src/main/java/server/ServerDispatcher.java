@@ -87,19 +87,16 @@ public class ServerDispatcher extends Thread
     }
 
     /**
-     * @return Return SocketThreads
+     * 
+     * @return
      */
-    private List<SocketThread> getThreads()
-    {
-        synchronized (threadListLock)
-        {
-            return threads;
-        }
-    }
-
     public List<String> getConnectedHosts()
     {
-        return new ArrayList<>();
+        List<String> hosts = new ArrayList<>();
+
+        threads.forEach(thread -> hosts.add(thread.getClientHost()));
+
+        return hosts;
     }
 
     /**
