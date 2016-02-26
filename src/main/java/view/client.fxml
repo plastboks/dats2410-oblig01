@@ -39,9 +39,9 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                 <children>
-                                    <Circle fx:id="red" fill="#ff1f1f" radius="36.0" stroke="BLACK" strokeType="INSIDE" />
-                                    <Circle fx:id="yellow" fill="YELLOW" radius="36.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
-                                    <Circle fx:id="green" fill="LIME" radius="36.0" stroke="LIME" strokeType="INSIDE" GridPane.rowIndex="2" />
+                                    <Circle fx:id="red" fill="RED" radius="36.0" GridPane.rowIndex="0" />
+                                    <Circle fx:id="yellow" fill="YELLOW" radius="36.0" GridPane.rowIndex="1" />
+                                    <Circle fx:id="green" fill="LIME" radius="36.0" GridPane.rowIndex="2" />
                                 </children>
                                 <BorderPane.margin>
                                     <Insets left="10.0" right="10.0" />
