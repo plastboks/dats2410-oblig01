@@ -50,4 +50,14 @@ public class Payload
     {
         return green;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("Green: %s, Yellow %s, Red %s",
+                getGreen() == ValidState.ON ? "On" : "Off",
+                getYellow() == ValidState.ON ? "On" : "Off",
+                getRed() == ValidState.ON ? "On" : "Off"
+        );
+    }
 }

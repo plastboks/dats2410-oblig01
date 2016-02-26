@@ -1,5 +1,7 @@
 package main.java.client;
 
+import main.java.view.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,6 +23,7 @@ public class ClientSocket extends Thread
 
     private static ClientController controller;
 
+    private Logger logger;
 
 
     public ClientSocket(ClientController controller)
@@ -32,7 +35,6 @@ public class ClientSocket extends Thread
     @Override
     public void run() {
         super.run();
-
 
         try (
                 Socket soc = new Socket(host, port);
@@ -49,11 +51,11 @@ public class ClientSocket extends Thread
                 Thread.sleep(THREAD_SLEEP);
 
                 if (!receivedText.equals(SERVER_BEAT)) {
-                   if(parser.signalparse(receivedText))
+                   if(parser.signalparse(receivedText)) {
                        controller.setLights(parser.getPayload());
-
+                       pushToLogger(parser.getPayload().toString());
+                   }
                 }
-                System.out.println("ping");
                 out.println(HARTBEAT);
             }
 
@@ -69,6 +71,17 @@ public class ClientSocket extends Thread
         {
 
         }
+    }
+
+    private void pushToLogger(String str)
+    {
+        if (logger != null) logger.push("ClientSocket: " + str);
+    }
+
+    public void setLogger(Logger logger)
+    {
+        this.logger = logger;
+        pushToLogger("Connected to logger");
     }
 }
 

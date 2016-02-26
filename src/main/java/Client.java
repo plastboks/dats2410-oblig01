@@ -31,6 +31,7 @@ public class Client extends Application
         Scene scene = new Scene(root);
 
         clientController = loader.getController();
+        clientController.pushLoggerToClientSocket();
 
 
         client.setTitle("ClientSocket");
@@ -43,7 +44,6 @@ public class Client extends Application
     public void stop() throws Exception
     {
         super.stop();
-
     }
 
 

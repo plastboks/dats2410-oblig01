@@ -22,13 +22,19 @@ public class ClientController {
     @FXML
     private Logger logger;
 
+    private ClientSocket clientSocket;
 
 
     public ClientController() throws IOException
     {
-        new ClientSocket(this).start();
+        clientSocket = new ClientSocket(this);
+        clientSocket.start();
     }
 
+    public void pushLoggerToClientSocket()
+    {
+       clientSocket.setLogger(logger);
+    }
 
     private void setRedCircle(boolean state)
     {

@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.java.server.ServerController;
+import main.java.server.ServerDispatcher;
 
 import java.io.IOException;
 
