@@ -138,7 +138,7 @@ public class ServerDispatcher extends Thread
      * and stops the HeartBeat loop from running. This
      * stops the ServerDispatching.
      */
-    protected void requestStop()
+    public void requestStop()
     {
         try
         {
