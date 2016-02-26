@@ -7,8 +7,10 @@ package main.java.server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.shape.Circle;
 import main.java.util.Constants;
+import main.java.view.ClientList;
 import main.java.view.Logger;
 
 import java.io.IOException;
@@ -32,24 +34,30 @@ public class ServerController
     @FXML
     private Logger logger;
 
+    @FXML
+    private ClientList clients;
+
+
     public ServerController() throws IOException
     {
         dispatcher = ServerDispatcher.getInstance();
         dispatcher.start();
+
         auto = new AutoLogic(this, dispatcher);
         auto.start();
+
     }
 
-    public void pushLoggerToDispatcher() throws IOException
+    public void onReady() throws IOException
     {
         ServerDispatcher.getInstance().setLogger(logger);
+        ServerDispatcher.getInstance().setClientList(clients);
     }
 
     public void killAutoThread()
     {
         auto.kill();
     }
-
 
     @FXML
     private void sendButtonAction(ActionEvent event)

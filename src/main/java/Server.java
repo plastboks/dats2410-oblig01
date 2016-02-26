@@ -31,7 +31,7 @@ public class Server extends Application
         Scene scene = new Scene(root);
 
         serverController = loader.getController();
-        serverController.pushLoggerToDispatcher();
+        serverController.onReady();
 
         server.setTitle("Server");
         server.setScene(scene);
