@@ -78,7 +78,6 @@ public class ServerDispatcher extends Thread
 
                 pushToLogger(String.format("Client %s connected", client.getInetAddress()));
             }
-
         }
         catch (IOException e)
         {
@@ -87,7 +86,7 @@ public class ServerDispatcher extends Thread
     }
 
     /**
-     * 
+     *
      * @return
      */
     public List<String> getConnectedHosts()
@@ -166,6 +165,7 @@ public class ServerDispatcher extends Thread
         {
             pushToLogger("Closed connection with " + socketThread.getClientHost());
             threads.remove(socketThread);
+            // send signal to ServerController
         }
     }
 

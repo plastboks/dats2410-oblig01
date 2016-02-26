@@ -1,8 +1,5 @@
 package main.java.server;
 
-import com.sun.istack.internal.NotNull;
-import main.java.view.Logger;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,7 +14,8 @@ public class SocketThread extends Thread {
     private Socket clientSocket;
     private static final String HEARTBEAT = "TICK";
     private static final int THREAD_SLEEP = 100;
-    private volatile boolean readSignal = false;
+    private volatile boolean readSignal = true;
+    private boolean isRunning = true;
 
     public SocketThread(Socket clientSocket)
     {
@@ -35,6 +33,20 @@ public class SocketThread extends Thread {
         )
         {
             String clientHost = clientSocket.getInetAddress().getHostAddress();
+
+            out.println(MessageHandler.inst.getMessage());
+
+            while(isRunning)
+            {
+                if(!readSignal)
+                {
+                    readSignal = true;
+                    out.println(MessageHandler.inst.getMessage());
+                } else {
+                    out.println(HEARTBEAT);
+                }
+            }
+
 
             do {
                 Thread.sleep(THREAD_SLEEP);
@@ -69,5 +81,10 @@ public class SocketThread extends Thread {
     public synchronized void update()
     {
         readSignal = false;
+    }
+
+    protected void requestStop()
+    {
+        isRunning = false;
     }
 }
