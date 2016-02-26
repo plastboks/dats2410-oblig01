@@ -1,15 +1,17 @@
 # TODOS
 
 - [ ] **HP** Løse hartbeat problematikken på en elegant måte (med Java Sockets som utgangspunkt)
-- [ ] **Simon** Skrive client GUI (fxml) og tilhørende java klasser.
 - [ ] **Erlend** Skrive server GUI (fxml) og tilhørende java klasser.
 - [ ] Lage et diagram (UML?) for oppbygging av clienten.
 - [ ] **HC** Skrive dialogbokser for port og ipaddresse for client og server (fxml + java). (HC)
 - [ ] **HC** Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
-- [ ] **Simon** Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")(S)
 - [ ] **HP** Sikre at sockettrådene til serverkoden (poc) fungerer tilstrekkelig.
+- [ ] **HP** Drepe alle gjenværende tråder til prosessen ved avslutt.
+- [ ] **Alex** Skrive ListView for tilknyttede klienter på servergui.
 - [ ] Skrive dokumentasjon
 - [ ] Wireshark'e
+- [x] **Simon** Skrive client GUI (fxml) og tilhørende java klasser.
+- [x] **Simon** Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")(S)
 - [x] Skrive en tekstlig kommunikasjonsprotokoll med linjeskift som endetegn (som og inkluderer hartbeat sendingene)
 - [x] Lage et diagram (UML?) for oppbygging av software lagene (kommunikasjon(Sockets), backend, frontend).
 - [x] Skrive en protollgenerator (serversiden) som skaper datastrengene til klientene.
