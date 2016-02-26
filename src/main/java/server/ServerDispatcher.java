@@ -67,7 +67,7 @@ public class ServerDispatcher extends Thread
                     client = listener.accept();
                 }
 
-                SocketThread socketThread = new SocketThread(client, logger);
+                SocketThread socketThread = new SocketThread(client);
 
                 synchronized (threadListLock)
                 {
@@ -165,6 +165,7 @@ public class ServerDispatcher extends Thread
     {
         synchronized (threadListLock)
         {
+            pushToLogger("Closed connection with " + socketThread.getClientHost());
             threads.remove(socketThread);
         }
     }
