@@ -89,7 +89,7 @@ public class ServerDispatcher extends Thread
     /**
      * @return Return SocketThreads
      */
-    protected List<SocketThread> getThreads()
+    private List<SocketThread> getThreads()
     {
         synchronized (threadListLock)
         {
@@ -97,11 +97,16 @@ public class ServerDispatcher extends Thread
         }
     }
 
+    public List<String> getConnectedHosts()
+    {
+        return new ArrayList<>();
+    }
+
     /**
      * @throws IOException
      * @return the singleton ServerDispatcher instance.
      */
-    protected static ServerDispatcher getInstance() throws IOException
+    public static ServerDispatcher getInstance() throws IOException
     {
         if (serverDispatcher == null)
             serverDispatcher = new ServerDispatcher();
