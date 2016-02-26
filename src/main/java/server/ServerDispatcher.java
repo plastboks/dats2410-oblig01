@@ -21,7 +21,7 @@ import java.util.List;
  * Payload class and push these signals further to the MessageHandler
  * class and also notify each SocketThread that there is a new signal to pull.
  */
-public class ServerDispatcher implements Runnable
+public class ServerDispatcher extends Thread
 {
     private static final int PORT = 8080;
     private static final int THREAD_SLEEP = 100;
