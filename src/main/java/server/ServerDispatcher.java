@@ -60,8 +60,6 @@ public class ServerDispatcher implements Runnable
             }
             while(isRunning)
             {
-                Thread.sleep(THREAD_SLEEP);
-
                 Socket client;
 
                 synchronized (listenerLock)
@@ -69,7 +67,7 @@ public class ServerDispatcher implements Runnable
                     client = listener.accept();
                 }
 
-                SocketThread socketThread = new SocketThread(client);
+                SocketThread socketThread = new SocketThread(client, logger);
 
                 synchronized (threadListLock)
                 {
@@ -83,10 +81,6 @@ public class ServerDispatcher implements Runnable
 
         }
         catch (IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        catch (InterruptedException e)
         {
             System.out.println(e.getMessage());
         }

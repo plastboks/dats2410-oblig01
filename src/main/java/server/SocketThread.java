@@ -20,9 +20,10 @@ public class SocketThread extends Thread {
     private static final int THREAD_SLEEP = 100;
     private volatile boolean readSignal = false;
 
-    public SocketThread(Socket clientSocket)
+    public SocketThread(Socket clientSocket, Logger logger)
     {
         this.clientSocket = clientSocket;
+        this.logger = logger;
     }
 
     @Override
