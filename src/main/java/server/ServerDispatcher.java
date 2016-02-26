@@ -87,21 +87,23 @@ public class ServerDispatcher extends Thread
     }
 
     /**
-     * @return Return SocketThreads
+     * 
+     * @return
      */
-    protected List<SocketThread> getThreads()
+    public List<String> getConnectedHosts()
     {
-        synchronized (threadListLock)
-        {
-            return threads;
-        }
+        List<String> hosts = new ArrayList<>();
+
+        threads.forEach(thread -> hosts.add(thread.getClientHost()));
+
+        return hosts;
     }
 
     /**
      * @throws IOException
      * @return the singleton ServerDispatcher instance.
      */
-    protected static ServerDispatcher getInstance() throws IOException
+    public static ServerDispatcher getInstance() throws IOException
     {
         if (serverDispatcher == null)
             serverDispatcher = new ServerDispatcher();
