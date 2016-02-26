@@ -2,6 +2,7 @@ package main.java.server;
 
 import com.sun.istack.internal.NotNull;
 import main.java.util.Payload;
+import main.java.view.ClientList;
 import main.java.view.Logger;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class ServerDispatcher extends Thread
     private static ServerDispatcher serverDispatcher;
     private ServerSocket listener;
     private Logger logger;
+    private ClientList clientList;
     private volatile List<SocketThread> threads;
     private volatile boolean isRunning = true;
     private final Object threadListLock = new Object();
@@ -178,5 +180,10 @@ public class ServerDispatcher extends Thread
     {
         this.logger = logger;
         pushToLogger("Connected to logger");
+    }
+
+    public void setClientList(ClientList clientList)
+    {
+        this.clientList = clientList;
     }
 }
