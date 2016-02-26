@@ -1,11 +1,9 @@
 package main.java;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import main.java.client.ClientController;
 
@@ -35,7 +33,7 @@ public class Client extends Application
         clientController = loader.getController();
 
 
-        client.setTitle("Client");
+        client.setTitle("ClientSocket");
         client.setScene(scene);
         client.show();
     }

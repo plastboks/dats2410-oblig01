@@ -10,34 +10,29 @@ import java.net.UnknownHostException;
 /**
  * Created by Simon on 17.02.2016.
  */
-public class Client
+public class ClientSocket extends Thread
 {
-    private static String host = "10.253.9.95";
-    private static int port = 1234;
+    private static String host = "127.0.0.1";
+    private static int port = 8080;
 
     private static final int THREAD_SLEEP = 100;
     private static final String HARTBEAT = "tock";
     private static final String SERVER_BEAT = "tick";
 
-    /* Få inn instans av (clientcontroller)APP.java */
     private static ClientController controller;
 
 
 
-    public static void main(String[] args)throws InterruptedException
+    public ClientSocket(ClientController controller)
     {
-        System.out.print("JE KJEM HIT!");
-        if (args.length < 2) {
-            System.out.printf("Please provide the host and port argument!\n");
-            System.exit(-1);
-        }
+        this.controller=controller;
+    }
 
-        try {
-            port = Integer.parseInt(args[1]);
-        } catch (NumberFormatException e) {
-            System.out.printf("Could not parse the port number argument: '%s'\n", args[0]);
-            System.exit(-1);
-        }
+
+    @Override
+    public void run() {
+        super.run();
+
 
         try (
                 Socket soc = new Socket(host, port);
@@ -54,7 +49,9 @@ public class Client
                 Thread.sleep(THREAD_SLEEP);
 
                 if (!receivedText.equals(SERVER_BEAT)) {
-                    parser.signalparse(receivedText); //Send med client APP.java instans
+                   if(parser.signalparse(receivedText))
+                       controller.setLights(parser.getPayload());
+
                 }
                 System.out.println("ping");
                 out.println(HARTBEAT);
@@ -68,10 +65,10 @@ public class Client
         } catch (IOException ioe) {
             System.err.printf("Could not get IO from the connection to: %s", host);
             System.exit(1);
+        }catch(InterruptedException ie)
+        {
+
         }
     }
-
-
-
 }
 
