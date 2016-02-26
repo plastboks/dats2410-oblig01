@@ -14,8 +14,9 @@ public class SocketThread extends Thread {
     private Socket clientSocket;
     private static final String HEARTBEAT = "TICK";
     private static final int THREAD_SLEEP = 100;
-    private volatile boolean readSignal = true;
+    private volatile boolean readSignal = false;
     private boolean isRunning = true;
+    private Object readSignalLock = new Object();
 
     public SocketThread(Socket clientSocket)
     {
@@ -25,6 +26,9 @@ public class SocketThread extends Thread {
     @Override
     public void run()
     {
+        readSignal = false;
+        isRunning = true;
+
         try (
                 PrintWriter out = new PrintWriter(
                         clientSocket.getOutputStream(), true);
@@ -32,21 +36,7 @@ public class SocketThread extends Thread {
                         new InputStreamReader(clientSocket.getInputStream()));
         )
         {
-            String clientHost = clientSocket.getInetAddress().getHostAddress();
-
             out.println(MessageHandler.inst.getMessage());
-
-            while(isRunning)
-            {
-                if(!readSignal)
-                {
-                    readSignal = true;
-                    out.println(MessageHandler.inst.getMessage());
-                } else {
-                    out.println(HEARTBEAT);
-                }
-            }
-
 
             do {
                 Thread.sleep(THREAD_SLEEP);
@@ -67,6 +57,7 @@ public class SocketThread extends Thread {
             System.out.println(e.getMessage());
         }
     }
+
 
     protected String getClientHost()
     {
