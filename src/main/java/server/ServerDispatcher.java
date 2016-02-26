@@ -77,7 +77,7 @@ public class ServerDispatcher extends Thread
                 }
 
                 socketThread.start();
-
+                synchronizeClientList();
                 pushToLogger(String.format("Client %s connected", client.getInetAddress()));
             }
         }
@@ -87,11 +87,16 @@ public class ServerDispatcher extends Thread
         }
     }
 
+    private void synchronizeClientList()
+    {
+        clientList.insert(getConnectedHosts());
+    }
+
     /**
      *
      * @return
      */
-    public List<String> getConnectedHosts()
+    private List<String> getConnectedHosts()
     {
         List<String> hosts = new ArrayList<>();
 
@@ -168,6 +173,7 @@ public class ServerDispatcher extends Thread
             pushToLogger("Closed connection with " + socketThread.getClientHost());
             threads.remove(socketThread);
             // send signal to ServerController
+            synchronizeClientList();
         }
     }
 
