@@ -8,74 +8,110 @@ import java.net.Socket;
 
 /**
  * Created by hans on 24.02.16.
+ * Class SocketThread manage a client socket connection and communication.
+ *
  */
 public class SocketThread extends Thread {
 
     private Socket clientSocket;
-    private static final String HEARTBEAT = "TICK";
-    private static final int THREAD_SLEEP = 100;
-    private volatile boolean readSignal = false;
+    private volatile boolean isRead = false;
     private boolean isRunning = true;
-    private Object readSignalLock = new Object();
+    private long lastSentSignal;
+    private long lastReceivedSignal;
+    private long requestedTimeout;
+    private long HB_INT = 200;
+    private int life = 3;
 
-    public SocketThread(Socket clientSocket)
-    {
+    private static final String SERVER_HB = "PING";
+
+    private PrintWriter out;
+    private BufferedReader in;
+
+    public SocketThread(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
+
+        out = new PrintWriter(
+                clientSocket.getOutputStream(), true);
+        in = new BufferedReader(
+                new InputStreamReader(clientSocket.getInputStream()));
+
+        isRead = false;
+        isRunning = true;
+        requestedTimeout = 10000; // 10 seconds
+
     }
 
     @Override
     public void run()
     {
-        readSignal = false;
-        isRunning = true;
-
-        try (
-                PrintWriter out = new PrintWriter(
-                        clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(clientSocket.getInputStream()));
-        )
+        try {
+            while (isRunning)
+            {
+                sendSignal();
+                receiveSignal();
+                calculate();
+            }
+            killConnection();
+        } catch (IOException e)
         {
-            out.println(MessageHandler.inst.getMessage());
-
-            do {
-                Thread.sleep(THREAD_SLEEP);
-
-                if (!readSignal) {
-                    readSignal = true;
-                    out.println(MessageHandler.inst.getMessage());
-                } else {
-                    out.println(HEARTBEAT);
-                }
-
-            } while (in.readLine() != null);
-
-            clientSocket.close();
-            ServerDispatcher.getInstance().remove(this);
-
-        } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
+    protected void receiveSignal() throws IOException
+    {
+        if(in.readLine() != null)
+        {
+            lastReceivedSignal = System.currentTimeMillis();
+            life = 3;
+        }
+    }
+
+    protected void sendSignal() throws IOException
+    {
+        if(isRead)
+        {
+            if(lastSentSignal > HB_INT )
+            {
+                out.println(SERVER_HB);
+                lastSentSignal = System.currentTimeMillis();
+            }
+        } else {
+            out.println(MessageHandler.inst.getMessage());
+            lastSentSignal = System.currentTimeMillis();
+        }
+    }
+
+    protected void calculate() throws IOException {
+        if((lastSentSignal - lastReceivedSignal) > requestedTimeout)
+        {
+            if(life == 0)
+            {
+                requestStop();
+            }
+
+            lastReceivedSignal = System.currentTimeMillis();
+            life--;
+        }
+    }
+
+    protected void killConnection() throws IOException {
+        clientSocket.close();
+        ServerDispatcher.getInstance().remove(this);
+    }
+
+    private void requestStop()
+    {
+        isRunning = false;
+    }
 
     protected String getClientHost()
     {
         return clientSocket.getInetAddress().getHostAddress();
     }
 
-    /**
-     * The SocketThreads update method notify the
-     * heartbeat-loop about a new message at the
-     * MessageHandler class.
-     */
     public synchronized void update()
     {
-        readSignal = false;
-    }
-
-    protected void requestStop()
-    {
-        isRunning = false;
+        isRead = false;
     }
 }
