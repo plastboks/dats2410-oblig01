@@ -26,7 +26,7 @@ public class ClientController {
 
     public ClientController() throws IOException
     {
-        new ClientSocket(this);
+        new ClientSocket(this).start();
     }
 
 
