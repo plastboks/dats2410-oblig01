@@ -35,6 +35,7 @@ public class ServerController
     public ServerController() throws IOException
     {
         dispatcher = ServerDispatcher.getInstance();
+        dispatcher.start();
         auto = new AutoLogic(this, dispatcher);
         auto.start();
     }
