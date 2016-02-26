@@ -143,7 +143,6 @@ public class ServerDispatcher extends Thread
         try
         {
             isRunning = false;
-            Thread.sleep(1);
             synchronized (listenerLock)
             {
                 listener.close();
@@ -151,8 +150,6 @@ public class ServerDispatcher extends Thread
         }
         catch (IOException e)
         {
-            System.out.println(e.getMessage());
-        } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }
