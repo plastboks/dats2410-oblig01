@@ -42,8 +42,8 @@ public class Server extends Application
     public void stop() throws Exception
     {
         super.stop();
-
         serverController.killAutoThread();
+        ServerDispatcher.getInstance().requestStop();
     }
 }
 
