@@ -45,6 +45,7 @@ public class Client extends Application
     public void stop() throws Exception
     {
         super.stop();
+        clientController.killSocket();
     }
 
 

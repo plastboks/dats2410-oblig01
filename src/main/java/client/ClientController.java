@@ -75,8 +75,14 @@ public class ClientController {
     }
 
 
+    public void killSocket()
+    {
+        clientSocket.kill();
+    }
+
     @FXML
     public void exitApplication() {
+        clientSocket.kill();
         Platform.exit();
     }
 
