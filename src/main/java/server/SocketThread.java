@@ -1,5 +1,7 @@
 package main.java.server;
 
+import main.java.util.HeartBeat;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,14 +18,7 @@ public class SocketThread extends Thread {
     private Socket clientSocket;
     private volatile boolean isRead = false;
     private boolean isRunning = true;
-    private long lastSentSignal;
-    private long lastReceivedSignal;
-    private long requestedTimeout;
-    private long HB_INT = 200;
-    private int life = 3;
-
-    private static final String SERVER_HB = "PING";
-
+    private HeartBeat heartBeat;
     private PrintWriter out;
     private BufferedReader in;
 
@@ -35,10 +30,7 @@ public class SocketThread extends Thread {
         in = new BufferedReader(
                 new InputStreamReader(clientSocket.getInputStream()));
 
-        isRead = false;
-        isRunning = true;
-        requestedTimeout = 10000; // 10 seconds
-
+        heartBeat = new HeartBeat(out);
     }
 
     @Override
@@ -49,7 +41,10 @@ public class SocketThread extends Thread {
             {
                 sendSignal();
                 receiveSignal();
-                calculate();
+                if (heartBeat.getState().equals(HeartBeat.State.DISCONNECTED))
+                {
+                    requestStop();
+                }
             }
             killConnection();
         } catch (IOException e)
@@ -58,41 +53,24 @@ public class SocketThread extends Thread {
         }
     }
 
-    protected void receiveSignal() throws IOException
+    private void sendSignal() throws IOException
     {
-        if(in.readLine() != null)
+        if(!isRead)
         {
-            lastReceivedSignal = System.currentTimeMillis();
-            life = 3;
-        }
-    }
-
-    protected void sendSignal() throws IOException
-    {
-        if(isRead)
-        {
-            if(lastSentSignal > HB_INT )
-            {
-                out.println(SERVER_HB);
-                lastSentSignal = System.currentTimeMillis();
-            }
-        } else {
             out.println(MessageHandler.inst.getMessage());
-            lastSentSignal = System.currentTimeMillis();
+            isRead = true;
+            System.out.println(isRead);
+        }
+        else if(isRead && ((System.currentTimeMillis() - heartBeat.getLSP()) >= HeartBeat.INTERVAL))
+        {
+            heartBeat.sendSignal();
         }
     }
 
-    protected void calculate() throws IOException {
-        if((lastSentSignal - lastReceivedSignal) > requestedTimeout)
-        {
-            if(life == 0)
-            {
-                requestStop();
-            }
-
-            lastReceivedSignal = System.currentTimeMillis();
-            life--;
-        }
+    private void receiveSignal() throws IOException
+    {
+        if(in.ready())
+            heartBeat.receiveSignal();
     }
 
     protected void killConnection() throws IOException {

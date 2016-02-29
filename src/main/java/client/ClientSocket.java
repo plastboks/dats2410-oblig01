@@ -1,13 +1,12 @@
 package main.java.client;
 
+import main.java.util.HeartBeat;
 import main.java.view.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
 
 /**
  * Created by Simon on 17.02.2016.
@@ -20,15 +19,20 @@ public class ClientSocket extends Thread
     private static final int THREAD_SLEEP = 100;
     private static final String HARTBEAT = "tock";
     private static final String SERVER_BEAT = "tick";
-
     private static ClientController controller;
-
+    private boolean running = true;
     private Logger logger;
-
+    private HeartBeat heartBeat;
 
     public ClientSocket(ClientController controller)
     {
         this.controller=controller;
+    }
+
+    public void kill()
+    {
+
+        running=false;
     }
 
 
@@ -36,27 +40,39 @@ public class ClientSocket extends Thread
     public void run() {
         super.run();
 
+
         try (
                 Socket soc = new Socket(host, port);
                 PrintWriter out =
                         new PrintWriter(soc.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(soc.getInputStream()));
+
+        BufferedReader in = new BufferedReader(
+                        new InputStreamReader(soc.getInputStream()))
         )
         {
+
             Protocolparser parser =  new Protocolparser(controller);
+
+            HeartBeat heartBeat = new HeartBeat(out);
+
             String receivedText;
             while ((receivedText = in.readLine()) != null) {
 
                 Thread.sleep(THREAD_SLEEP);
-
-                if (!receivedText.equals(SERVER_BEAT)) {
-                   if(parser.signalparse(receivedText)) {
-                       controller.setLights(parser.getPayload());
-                       pushToLogger(parser.getPayload().toString());
-                   }
+                if(!running){
+                    throw new InterruptedException();
                 }
-                out.println(HARTBEAT);
+                if (!receivedText.equals(SERVER_BEAT)) {
+                    if(parser.signalparse(receivedText)) {
+                        controller.setLights(parser.getPayload());
+                        pushToLogger(parser.getPayload().toString());
+                    }
+                } else {
+                    heartBeat.receiveSignal();
+                }
+
+                if((heartBeat.getLSP() - System.currentTimeMillis()) >= HeartBeat.INTERVAL)
+                    heartBeat.sendSignal();
             }
 
             System.out.println("Server disconnected");
@@ -69,8 +85,10 @@ public class ClientSocket extends Thread
             System.exit(1);
         }catch(InterruptedException ie)
         {
-
+            System.exit(1);
         }
+
+
     }
 
     private void pushToLogger(String str)
@@ -84,4 +102,3 @@ public class ClientSocket extends Thread
         pushToLogger("Connected to logger");
     }
 }
-
