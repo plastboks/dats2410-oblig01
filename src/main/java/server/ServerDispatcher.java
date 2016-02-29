@@ -8,6 +8,7 @@ import main.java.view.Logger;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +33,7 @@ public class ServerDispatcher extends Thread
     private volatile List<SocketThread> threads;
     private volatile boolean isRunning = true;
     private final Object threadListLock = new Object();
-    private final Object listenerLock = new Object();
-
+    
     /**
      * Private constructor disable other classes of making instances of ServerDispatcher.
      *
@@ -63,10 +63,8 @@ public class ServerDispatcher extends Thread
             {
                 Socket client;
 
-                synchronized (listenerLock)
-                {
-                    client = listener.accept();
-                }
+                client = listener.accept();
+
 
                 SocketThread socketThread = new SocketThread(client);
 
@@ -82,7 +80,10 @@ public class ServerDispatcher extends Thread
         }
         catch (IOException e)
         {
-            System.out.println(e.getMessage());
+            if(e instanceof SocketException)
+                System.out.println("Connection closed.");
+            else
+                System.out.println(e.getMessage());
         }
     }
 
@@ -150,10 +151,7 @@ public class ServerDispatcher extends Thread
         try
         {
             isRunning = false;
-            synchronized (listenerLock)
-            {
-                listener.close();
-            }
+            listener.close();
         }
         catch (IOException e)
         {
