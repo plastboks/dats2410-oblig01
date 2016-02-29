@@ -16,9 +16,7 @@ public class HeartBeat {
     private PrintWriter output;
     public static final String INTERVAL_PING = "PING";
 
-    public enum State {
-        NORMAL, WAITING, TIMEOUT, DISCONNECTED
-    }
+    public enum State { NORMAL, TIMEOUT, DISCONNECTED }
 
     /**
      * Standard construct that sets timeout parameter to 10 seconds.
@@ -66,8 +64,6 @@ public class HeartBeat {
         if((System.currentTimeMillis() - LRP) > timeout)
         {
             if(state == State.NORMAL)
-                state = State.WAITING;
-            else if(state == State.WAITING)
                 state = State.TIMEOUT;
             else
                 state = State.DISCONNECTED;
@@ -82,16 +78,6 @@ public class HeartBeat {
     public State getState()
     {
         return state;
-    }
-
-    public long getLRP()
-    {
-        return LRP;
-    }
-
-    public long getLSP()
-    {
-        return LSP;
     }
 
 }

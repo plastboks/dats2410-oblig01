@@ -6,9 +6,6 @@ import main.java.view.Logger;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
-
 
 /**
  * Created by Simon on 17.02.2016.
@@ -17,10 +14,7 @@ public class ClientSocket extends Thread
 {
     private static String host = "127.0.0.1";
     private static int port = 8080;
-
     private static final int THREAD_SLEEP = 100;
-    private static final String HARTBEAT = "tock";
-    private static final String SERVER_BEAT = "tick";
     private static ClientController controller;
     private boolean running = true;
     private Logger logger;

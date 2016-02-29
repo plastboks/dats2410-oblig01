@@ -16,6 +16,7 @@ import java.net.Socket;
 public class SocketThread extends Thread {
 
     private Socket clientSocket;
+    private static final long THREAD_SLEEP = 200;
     private volatile boolean isRead = false;
     private boolean isRunning = true;
     private HeartBeat heartBeat;
@@ -39,6 +40,7 @@ public class SocketThread extends Thread {
         try {
             while (isRunning)
             {
+                Thread.sleep(THREAD_SLEEP);
                 sendSignal();
                 receiveSignal();
                 if (heartBeat.getState().equals(HeartBeat.State.DISCONNECTED))
@@ -49,6 +51,8 @@ public class SocketThread extends Thread {
             killConnection();
         } catch (IOException e)
         {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

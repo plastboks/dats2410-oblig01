@@ -25,7 +25,6 @@ import java.util.List;
 public class ServerDispatcher extends Thread
 {
     private static final int PORT = 8080;
-    private static final int THREAD_SLEEP = 100;
     private static ServerDispatcher serverDispatcher;
     private ServerSocket listener;
     private Logger logger;
@@ -99,8 +98,8 @@ public class ServerDispatcher extends Thread
     private List<String> getConnectedHosts()
     {
         List<String> hosts = new ArrayList<>();
-
-        threads.forEach(thread -> hosts.add(thread.getClientHost()));
+        if(!threads.isEmpty())
+            threads.forEach(thread -> hosts.add(thread.getClientHost()));
 
         return hosts;
     }
@@ -172,8 +171,19 @@ public class ServerDispatcher extends Thread
         {
             pushToLogger("Closed connection with " + socketThread.getClientHost());
             threads.remove(socketThread);
-            // send signal to ServerController
             synchronizeClientList();
+        }
+
+        System.out.println("threads.size: " + threads.size());
+        System.out.println("threads.isEmpty: " + threads.isEmpty());
+
+        synchronized (threadListLock)
+        {
+            if(threads.isEmpty())
+            {
+                System.out.println("clearing clientList...");
+                clientList.clear();
+            }
         }
     }
 
