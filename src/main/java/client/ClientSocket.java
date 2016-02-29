@@ -60,13 +60,13 @@ public class ClientSocket extends Thread
                     if(!running){
                         throw new InterruptedException();
                     }
-                    if (!receivedText.equals(SERVER_BEAT)) {
+                    if (!receivedText.equals(HeartBeat.INTERVAL_PING)) {
                         if(parser.signalparse(receivedText)) {
                             controller.setLights(parser.getPayload());
                             pushToLogger(parser.getPayload().toString());
                         }
-                    } else {
-                        heartBeat.receiveSignal();
+                    } else if(receivedText.equals(HeartBeat.INTERVAL_PING)) {
+                        heartBeat.receiveSignal(receivedText);
                         heartBeat.sendSignal();
                     }
                     if(heartBeat.getState() == HeartBeat.State.DISCONNECTED)

@@ -61,7 +61,7 @@ public class SocketThread extends Thread {
             isRead = true;
             System.out.println(isRead);
         }
-        else if(isRead && ((System.currentTimeMillis() - heartBeat.getLSP()) >= HeartBeat.INTERVAL))
+        else if(isRead)
         {
             heartBeat.sendSignal();
         }
@@ -70,7 +70,7 @@ public class SocketThread extends Thread {
     private void receiveSignal() throws IOException
     {
         if(in.ready())
-            heartBeat.receiveSignal();
+            heartBeat.receiveSignal(in.readLine());
     }
 
     protected void killConnection() throws IOException {

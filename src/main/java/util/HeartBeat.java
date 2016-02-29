@@ -14,7 +14,7 @@ public class HeartBeat {
     private long timeout;
     private State state;
     private PrintWriter output;
-    private static final String INTERVAL_PING = "PING";
+    public static final String INTERVAL_PING = "PING";
 
     public enum State {
         NORMAL, WAITING, TIMEOUT, DISCONNECTED
@@ -40,19 +40,25 @@ public class HeartBeat {
         LRP = LSP = System.currentTimeMillis();
     }
 
-    public void receiveSignal()
+    public void receiveSignal(String signal)
     {
-        System.out.println("received signal: \t" + new Date().toString());
-        LRP = System.currentTimeMillis();
-        state = State.NORMAL;
+        if(signal.equals(INTERVAL_PING))
+        {
+            System.out.println("received signal: \t" + new Date().toString());
+            LRP = System.currentTimeMillis();
+            state = State.NORMAL;
+        }
     }
 
     public void sendSignal()
     {
-        System.out.println("sent signal: \t" + new Date().toString());
-        output.println(INTERVAL_PING);
-        LSP = System.currentTimeMillis();
-        setState();
+        if((System.currentTimeMillis() - LSP) >= HeartBeat.INTERVAL)
+        {
+            System.out.println("sent signal: \t" + new Date().toString());
+            output.println(INTERVAL_PING);
+            LSP = System.currentTimeMillis();
+            setState();
+        }
     }
 
     private void setState()
