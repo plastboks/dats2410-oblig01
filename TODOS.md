@@ -1,11 +1,9 @@
 # TODOS
-
-- [ ] **HP** Løse hartbeat problematikken på en elegant måte (med Java Sockets som utgangspunkt)
 - [ ] **Erlend** Skrive server GUI (fxml) og tilhørende java klasser.
 - [ ] **Alex** Lage et diagram (UML?) for oppbygging av clienten.
 - [ ] **HC** Skrive dialogbokser for port og ipaddresse for client og server (fxml + java). (HC)
 - [ ] **HC** Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
-- [ ] **HP** Sikre at sockettrådene til serverkoden (poc) fungerer tilstrekkelig.
+- [ ] **HP** Fikse at clientList blir tømt riktig
 - [ ] **HP** Drepe alle gjenværende tråder til serveren ved avslutt.
 - [ ] **Simon** Drepe alle gjenværende tråder til clienten ved avslutt.
 - [ ] Skrive dokumentasjon
@@ -22,3 +20,5 @@
 - [x] **Alex** Skrive en logger for server og klientsiden (ingen lagring til fil, kun minne)
 - [x] **Alex** Teste logikk for "automodus" (dynamisk)
 - [x] **HP** Sørge for at klienter som kobler til får siste gyldige datasignal.
+- [x] **HP** Løse hartbeat problematikken på en elegant måte (med Java Sockets som utgangspunkt)- 
+- [x] **HP** Sikre at sockettrådene til serverkoden (poc) fungerer tilstrekkelig.
