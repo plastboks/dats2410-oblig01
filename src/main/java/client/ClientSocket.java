@@ -1,5 +1,6 @@
 package main.java.client;
 
+import main.java.util.HeartBeat;
 import main.java.view.Logger;
 
 import java.io.*;
@@ -23,7 +24,7 @@ public class ClientSocket extends Thread
     private static ClientController controller;
     private boolean running = true;
     private Logger logger;
-
+    private HeartBeat heartBeat;
 
     public ClientSocket(ClientController controller)
     {
@@ -32,7 +33,6 @@ public class ClientSocket extends Thread
 
     public void kill()
     {
-
         running=false;
     }
 
@@ -52,6 +52,7 @@ public class ClientSocket extends Thread
             )
             {
                 Protocolparser parser =  new Protocolparser(controller);
+                heartBeat = new HeartBeat(out);
                 String receivedText;
                 while ((receivedText = in.readLine()) != null) {
 
@@ -64,9 +65,12 @@ public class ClientSocket extends Thread
                             controller.setLights(parser.getPayload());
                             pushToLogger(parser.getPayload().toString());
                         }
+                    } else {
+                        heartBeat.receiveSignal();
+                        heartBeat.sendSignal();
                     }
-                    out.println(HARTBEAT);
-
+                    if(heartBeat.getState() == HeartBeat.State.DISCONNECTED)
+                        kill();
                 }
 
                 System.out.println("Server disconnected");

@@ -1,6 +1,7 @@
 package main.java.util;
 
 import java.io.PrintWriter;
+import java.util.Date;
 
 /**
  * Created by hans on 28.02.16.
@@ -41,12 +42,14 @@ public class HeartBeat {
 
     public void receiveSignal()
     {
+        System.out.println("received signal: \t" + new Date().toString());
         LRP = System.currentTimeMillis();
-        setState();
+        state = State.NORMAL;
     }
 
     public void sendSignal()
     {
+        System.out.println("sent signal: \t" + new Date().toString());
         output.println(INTERVAL_PING);
         LSP = System.currentTimeMillis();
         setState();
@@ -67,7 +70,6 @@ public class HeartBeat {
             System.out.println("State: " + state);
             return;
         }
-        state = State.NORMAL;
         System.out.println("State: " + state);
     }
 
