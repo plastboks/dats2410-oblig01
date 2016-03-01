@@ -1,7 +1,6 @@
 package main.java.server;
 
 import com.sun.istack.internal.NotNull;
-import main.java.Server;
 import main.java.util.Payload;
 import main.java.view.ClientList;
 import main.java.view.Logger;
@@ -156,11 +155,13 @@ public class ServerDispatcher extends Thread
         try
         {
             isRunning = false;
+
             listener.close();
+
         }
         catch (IOException e)
         {
-            System.out.println(e.getMessage());
+            System.out.println("Could not close uninitiated Socket.");
         }
     }
 
@@ -177,14 +178,10 @@ public class ServerDispatcher extends Thread
             synchronizeClientList();
         }
 
-        System.out.println("threads.size: " + threads.size());
-        System.out.println("threads.isEmpty: " + threads.isEmpty());
-
         synchronized (threadListLock)
         {
             if(threads.isEmpty())
             {
-                System.out.println("clearing clientList...");
                 clientList.clear();
             }
         }

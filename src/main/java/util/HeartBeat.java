@@ -42,7 +42,6 @@ public class HeartBeat {
     {
         if(signal.equals(INTERVAL_PING))
         {
-            System.out.println("received signal: \t" + new Date().toString());
             LRP = System.currentTimeMillis();
             state = State.NORMAL;
         }
@@ -52,7 +51,6 @@ public class HeartBeat {
     {
         if((System.currentTimeMillis() - LSP) >= HeartBeat.INTERVAL)
         {
-            System.out.println("sent signal: \t" + new Date().toString());
             output.println(INTERVAL_PING);
             LSP = System.currentTimeMillis();
             setState();
@@ -69,15 +67,11 @@ public class HeartBeat {
                 state = State.DISCONNECTED;
 
             LRP = LSP = System.currentTimeMillis();
-            System.out.println("State: " + state);
             return;
         }
-        System.out.println("State: " + state);
     }
-
     public State getState()
     {
         return state;
     }
-
 }
