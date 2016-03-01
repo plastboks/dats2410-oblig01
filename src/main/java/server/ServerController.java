@@ -4,6 +4,7 @@
 
 package main.java.server;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,15 +50,19 @@ public class ServerController
         auto = new AutoLogic(this, dispatcher);
     }
 
-    public void onReady(int port) throws IOException
+    public void onReady() throws IOException
     {
-        dispatcher.setPort(port);
         dispatcher.start();
-
         auto.start();
 
         ServerDispatcher.getInstance().setLogger(logger);
         ServerDispatcher.getInstance().setClientList(clients);
+    }
+
+    public void onReady(int port) throws IOException
+    {
+        dispatcher.setPort(port);
+        onReady();
     }
 
     public void killAutoThread()

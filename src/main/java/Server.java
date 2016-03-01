@@ -36,7 +36,7 @@ public class Server extends Application
 
         serverController = loader.getController();
 
-        if (list.size() > 0) {
+        if (list.size() > 0) { // port arg
             try {
                 int port = Integer.parseInt(list.get(0));
                 if (port < 1000 || port > 10000)
@@ -47,6 +47,8 @@ public class Server extends Application
                 System.exit(-1);
                 return;
             }
+        } else { // no arg
+            serverController.onReady();
         }
 
         server.setTitle("Server");
