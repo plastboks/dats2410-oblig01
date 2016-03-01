@@ -33,7 +33,7 @@ public class ServerDispatcher extends Thread
     private volatile List<SocketThread> threads;
     private volatile boolean isRunning = true;
     private final Object threadListLock = new Object();
-    
+
     /**
      * Private constructor disable other classes of making instances of ServerDispatcher.
      *
