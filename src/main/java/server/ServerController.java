@@ -4,6 +4,7 @@
 
 package main.java.server;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -82,6 +83,13 @@ public class ServerController
         dispatcher.newMessage(payload);
         setLights(payload);
 
+    }
+
+    @FXML
+    public void exitApplication()
+    {
+        killAutoThread();
+        Platform.exit();
     }
 
     private void toggleCheckboxes()

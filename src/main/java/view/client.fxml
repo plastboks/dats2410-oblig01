@@ -14,11 +14,6 @@
                     <MenuItem id="closebutton" fx:id="closebutton" mnemonicParsing="false" onAction="#exitApplication" text="Close" />
                 </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-                <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                </items>
-            </Menu>
         </menus>
     </MenuBar>
 </top>
