@@ -54,6 +54,7 @@ public class ServerDispatcher extends Thread
     @Override
     public void run()
     {
+        pushToLogger("Started with port number: " + port);
         try
         {
             if (serverDispatcher == null)

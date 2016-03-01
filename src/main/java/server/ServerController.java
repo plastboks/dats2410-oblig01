@@ -52,11 +52,11 @@ public class ServerController
 
     public void onReady() throws IOException
     {
-        dispatcher.start();
-        auto.start();
-
         ServerDispatcher.getInstance().setLogger(logger);
         ServerDispatcher.getInstance().setClientList(clients);
+
+        dispatcher.start();
+        auto.start();
     }
 
     public void onReady(int port) throws IOException

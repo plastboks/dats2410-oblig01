@@ -38,6 +38,8 @@ public class ClientSocket extends Thread
     public void run() {
         super.run();
 
+        pushToLogger(String.format("Connected with server: %s on port: %d",
+                host, port));
 
             try (
                     Socket soc = new Socket(host, port);
