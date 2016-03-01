@@ -63,7 +63,7 @@ public class SocketThread extends Thread {
         {
             out.println(MessageHandler.inst.getMessage());
             isRead = true;
-            System.out.println(isRead);
+            //System.out.println(isRead);
         }
         else if(isRead)
         {
