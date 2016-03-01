@@ -82,6 +82,8 @@ public class SocketThread extends Thread {
         ServerDispatcher.getInstance().remove(this);
     }
 
+
+
     private void requestStop()
     {
         isRunning = false;

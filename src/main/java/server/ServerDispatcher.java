@@ -1,6 +1,7 @@
 package main.java.server;
 
 import com.sun.istack.internal.NotNull;
+import main.java.Server;
 import main.java.util.Payload;
 import main.java.view.ClientList;
 import main.java.view.Logger;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class ServerDispatcher extends Thread
 {
-    private static final int PORT = 8080;
+    private static int port = 8080;
     private static ServerDispatcher serverDispatcher;
     private ServerSocket listener;
     private Logger logger;
@@ -41,13 +42,14 @@ public class ServerDispatcher extends Thread
      */
     private ServerDispatcher() throws IOException
     {
-        // Look for more suitable synchronized list.
         synchronized (threadListLock)
         {
             threads = new ArrayList<>();
         }
+    }
 
-        listener = new ServerSocket(PORT);
+    public void setPort(int port) throws IOException {
+        ServerDispatcher.port = port;
     }
 
     @Override
@@ -59,6 +61,9 @@ public class ServerDispatcher extends Thread
             {
                 serverDispatcher = new ServerDispatcher();
             }
+
+            listener = new ServerSocket(ServerDispatcher.port);
+
             while(isRunning)
             {
                 Socket client;
