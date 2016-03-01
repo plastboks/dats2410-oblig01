@@ -7,7 +7,7 @@ package main.java.server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.shape.Circle;
 import main.java.util.Constants;
 import main.java.view.ClientList;
@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import main.java.util.Payload.ValidState;
 import main.java.util.Payload;
+
 
 
 public class ServerController
@@ -30,6 +31,9 @@ public class ServerController
 
     @FXML
     private CheckBox redBox, yellowBox, greenBox;
+
+    @FXML
+    private ToggleButton autoButt;
 
     @FXML
     private Logger logger;
@@ -60,17 +64,24 @@ public class ServerController
     }
 
     @FXML
-    private void sendButtonAction(ActionEvent event)
-    {
-        System.out.println("Send kommando");
-    }
-
-    @FXML
     private void toggleAutoBtn(ActionEvent event)
     {
         autoToggle = !autoToggle;
         auto.setState(autoToggle);
         toggleCheckboxes();
+        autoButt.setText(autoToggle ? "Auto" : "Manual");
+    }
+
+    @FXML
+    public void onCheckbox(ActionEvent event)
+    {
+        Payload payload = Payload.with()
+                .red(redBox.isSelected() ? ValidState.ON : ValidState.OFF)
+                .yellow(yellowBox.isSelected() ? ValidState.ON : ValidState.OFF)
+                .green(greenBox.isSelected() ? ValidState.ON : ValidState.OFF);
+        dispatcher.newMessage(payload);
+        setLights(payload);
+
     }
 
     private void toggleCheckboxes()
