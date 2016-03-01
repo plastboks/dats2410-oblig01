@@ -1,13 +1,13 @@
 # TODOS
-- [ ] **Erlend** Skrive server GUI (fxml) og tilhørende java klasser.
 - [ ] **Alex** Lage et diagram (UML?) for oppbygging av clienten.
-- [ ] **HC** Skrive dialogbokser for port og ipaddresse for client og server (fxml + java). (HC)
-- [ ] **HC** Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
-- [ ] **HP** Fikse at clientList blir tømt riktig
-- [ ] **HP** Drepe alle gjenværende tråder til serveren ved avslutt.
-- [ ] **Simon** Drepe alle gjenværende tråder til clienten ved avslutt.
 - [ ] Skrive dokumentasjon
 - [ ] Wireshark'e
+- [-] **HC** Skrive dialogbokser for port og ipaddresse for client og server (fxml + java). (HC)
+- [-] **HC** Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
+- [x] **Erlend** Skrive server GUI (fxml) og tilhørende java klasser.
+- [x] **HP** Fikse at clientList blir tømt riktig
+- [x] **HP** Drepe alle gjenværende tråder til serveren ved avslutt.
+- [x] **Simon** Drepe alle gjenværende tråder til clienten ved avslutt.
 - [x] **Alex** Skrive ListView for tilknyttede klienter på servergui.
 - [x] **Simon** Skrive client GUI (fxml) og tilhørende java klasser.
 - [x] **Simon** Skrive en protollparser (clientsiden) for tekststrengene "0;0;0\n", "0;1;0\n" ("{0,1};{0,1};{0,1}\n")(S)
