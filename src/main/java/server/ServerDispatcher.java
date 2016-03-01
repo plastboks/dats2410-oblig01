@@ -1,6 +1,5 @@
 package main.java.server;
 
-import com.sun.istack.internal.NotNull;
 import main.java.util.Payload;
 import main.java.view.ClientList;
 import main.java.view.Logger;
@@ -193,7 +192,7 @@ public class ServerDispatcher extends Thread
         if (logger != null) logger.push("ServerDispatcher: " + str);
     }
 
-    public void setLogger(@NotNull Logger logger)
+    public void setLogger(Logger logger)
     {
         this.logger = logger;
         pushToLogger("Connected to logger");

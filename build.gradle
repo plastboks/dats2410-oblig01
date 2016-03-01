@@ -1,0 +1,73 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+version = '0.4'
+mainClassName = 'main.java.Server'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+		resources {
+			srcDirs = ["src/main/java"]
+			includes = ["**/*.fxml"]
+		}
+	}
+}
+
+/*
+jar {
+    baseName = 'server'
+    version =  version
+	manifest {
+		attributes(	
+                'Implementation-Title': 'Server',
+                'Implementation-Version': version,
+                'Main-Class': mainClassName
+        )
+	}
+}
+*/
+
+task server(type: Jar) {
+    dependsOn compileJava
+    manifest {
+        attributes(
+                "Main-Class": 'main.java.Server',
+                "Implementation-Title": 'Server',
+                "Implementation-Description": 'server',
+                "Platform-Version": version,
+                "Implementation-Version": version,
+                "Assembly-Date": new java.util.Date().toString()
+        )
+    }
+    archiveName = "server-${version}.jar"
+    destinationDir = file("${buildDir}/libs")
+    from sourceSets.main.output
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+task client(type: Jar) {
+    dependsOn compileJava
+    manifest {
+        attributes(
+                "Main-Class": 'main.java.Client',
+                "Implementation-Title": 'Client',
+                "Implementation-Description": 'client',
+                "Platform-Version": version,
+                "Implementation-Version": version,
+                "Assembly-Date": new java.util.Date().toString()
+        )
+    }
+    archiveName = "client-${version}.jar"
+    destinationDir = file("${buildDir}/libs")
+    from sourceSets.main.output
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
