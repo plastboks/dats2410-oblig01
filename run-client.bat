@@ -1,3 +1,3 @@
 @echo off
-"%JAVA_HOME%\java.exe" -jar bin\client-0.3.jar localhost 4321
+java -jar bin\client-0.3.jar 127.0.0.1 4321
 PAUSE
