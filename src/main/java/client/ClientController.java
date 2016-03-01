@@ -27,15 +27,21 @@ public class ClientController {
 
     public ClientController() {}
 
-    public void initClientSocket()
+    public void onReady(String host, int port)
+    {
+        initClientSocket(host, port);
+        pushLoggerToClientSocket();
+    }
+
+    private void initClientSocket(String host, int port)
     {
         if (clientSocket == null) {
-            clientSocket = new ClientSocket(this);
+            clientSocket = new ClientSocket(host, port, this);
             clientSocket.start();
         }
     }
 
-    public void pushLoggerToClientSocket()
+    private void pushLoggerToClientSocket()
     {
        clientSocket.setLogger(logger);
     }

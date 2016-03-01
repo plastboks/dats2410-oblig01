@@ -46,15 +46,16 @@ public class ServerController
     public ServerController() throws IOException
     {
         dispatcher = ServerDispatcher.getInstance();
-        dispatcher.start();
-
         auto = new AutoLogic(this, dispatcher);
-        auto.start();
-
     }
 
-    public void onReady() throws IOException
+    public void onReady(int port) throws IOException
     {
+        dispatcher.setPort(port);
+        dispatcher.start();
+
+        auto.start();
+
         ServerDispatcher.getInstance().setLogger(logger);
         ServerDispatcher.getInstance().setClientList(clients);
     }

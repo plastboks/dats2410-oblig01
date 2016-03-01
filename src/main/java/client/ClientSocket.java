@@ -12,16 +12,19 @@ import java.net.UnknownHostException;
  */
 public class ClientSocket extends Thread
 {
-    private static String host = "127.0.0.1";
-    private static int port = 8080;
     private static final int THREAD_SLEEP = 100;
-    private static ClientController controller;
+
+    private String host;
+    private int port;
+    private ClientController controller;
     private boolean running = true;
     private Logger logger;
     private HeartBeat heartBeat;
 
-    public ClientSocket(ClientController controller)
+    public ClientSocket(String host, int port, ClientController controller)
     {
+        this.host = host;
+        this.port = port;
         this.controller=controller;
     }
 
