@@ -14,8 +14,6 @@ import java.io.IOException;
  */
 public class ClientController {
 
-
-
     @FXML
     private Circle red, yellow, green;
 

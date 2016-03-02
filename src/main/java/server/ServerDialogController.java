@@ -14,9 +14,7 @@ public class ServerDialogController {
 
     public ServerDialogController() {}
 
-
-    @FXML
-    public void okBtn(ActionEvent event){
+    public void okButton(ActionEvent event){
         System.out.println("Gjør noe!!");
     }
 

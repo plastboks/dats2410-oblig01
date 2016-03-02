@@ -27,6 +27,15 @@ public class Client extends Application
     @Override
     public void start(Stage client) throws IOException
     {
+
+      /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("gui/client.dialog.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+
+        client.setTitle("Client Dialog");
+        client.setScene(scene);
+        client.show();*/
+
         Parameters params = getParameters();
         List<String> list = params.getRaw();
 
@@ -35,6 +44,8 @@ public class Client extends Application
             System.exit(-1);
             return;
         }
+
+
 
         String host = list.get(0);
         int port;
