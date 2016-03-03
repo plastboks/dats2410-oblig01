@@ -2,5 +2,5 @@
 
 
 ## Running
-* `java -jar bin/server.jar <port>`
-* `java -jar bin/client.jar <host> <port>`
+* `java -jar bin/server.jar <port>` or `./run-server.sh`
+* `java -jar bin/client.jar <host> <port>` or `./run-client.sh`

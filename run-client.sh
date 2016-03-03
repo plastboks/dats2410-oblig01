@@ -2,6 +2,6 @@
 
 PORT=4321
 HOST=localhost
-VER=0.4
+VER=final
 
 java -jar ./bin/server-$VER.jar $HOST $PORT

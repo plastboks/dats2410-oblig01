@@ -30,7 +30,7 @@ public class Server extends Application
         Parameters params = getParameters();
         List<String> list = params.getRaw();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/server.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/server.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
 

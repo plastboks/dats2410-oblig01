@@ -47,7 +47,7 @@ public class Client extends Application
             return;
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/client.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/client.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
 

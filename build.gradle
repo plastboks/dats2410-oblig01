@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-version = '0.4'
+version = 'final'
 mainClassName = 'main.java.Server'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
