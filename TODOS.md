@@ -1,7 +1,7 @@
 # TODOS
-- [ ] **Alex** Lage et diagram (UML?) for oppbygging av clienten.
-- [ ] Skrive dokumentasjon
-- [ ] Wireshark'e
+- [x] **Alex** Lage et diagram (UML?) for oppbygging av clienten.
+- [x] Skrive dokumentasjon
+- [x] Wireshark'e
 - [-] **HC** Skrive dialogbokser for port og ipaddresse for client og server (fxml + java). (HC)
 - [-] **HC** Skrive en (innebygget) dialogboks for feilmeldinger (fxml + java).
 - [x] **Erlend** Skrive server GUI (fxml) og tilhørende java klasser.
