@@ -20,20 +20,6 @@ sourceSets {
 	}
 }
 
-/*
-jar {
-    baseName = 'server'
-    version =  version
-	manifest {
-		attributes(	
-                'Implementation-Title': 'Server',
-                'Implementation-Version': version,
-                'Main-Class': mainClassName
-        )
-	}
-}
-*/
-
 task server(type: Jar) {
     dependsOn compileJava
     manifest {
